@@ -1,0 +1,174 @@
+{layout="_layouts/_layout_main"}
+
+{!-- Meta Variables --}
+{layout:set name="page_schema"}ProfilePage{/layout:set}
+{layout:set name="meta_robots"}noindex,nofollow{/layout:set}
+{layout:set name="meta_page_title"}{exp:ilum_wallet:lang key="my_profile"} - {site_name}{/layout:set}
+{if logged_in}{layout:set name="meta_section"}{logged_in_screen_name}{/layout:set}{/if}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+  $(document).ready(function() {
+	 {if last_segment == "register_success"}notifyRegisterSuccess();
+	 {if:elseif last_segment == "updated"}notifyUpdated();
+	 {if:elseif last_segment == "pass_updated"}notifyPassUpdated();
+	 {if:elseif last_segment == "email_updated"}notifyEmailUpdated();{/if}
+	 
+	 var success = function(data, status, xhr) {
+	   data = data.trim();
+	   if (data == 'y' || data == 'yes') {
+	   	 data = "<span class='text-success'>{exp:ilum_wallet:lang key="yes"}</span>";
+	   } else {
+	   	 data = "{exp:ilum_wallet:lang key="no"}";
+	   }
+	   $('#accept_messages_setting').html(data);
+	 };
+	 
+	 $('#accept_messages').change(function() {
+	 	if ($('#accept_messages:checkbox:checked').length > 0) {
+			var new_val = 'y';
+		} else {
+			var new_val = 'n';
+		}
+
+	 	$.ajax({
+		  type: 'POST',
+		  url: '/account/settings_update/accept_messages',
+		  data: {value: new_val},
+		  success: success,
+		  dataType: 'html'
+		});
+	 });
+  });
+  
+  var notifyRegisterSuccess = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="register_success"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyUpdated = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="account_updated"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyPassUpdated = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="pass_updated"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyEmailUpdated = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="email_updated"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="my_profile"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="my_profile"}{/layout:set:append}
+
+{!-- Contents --}
+  			{exp:user:profile}
+			<!-- BEGIN setting-list -->
+			<ul class="setting-list">
+				<li class="setting-title text-uppercase">{exp:ilum_wallet:lang key="settings"}</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="name"}</div>
+					<div class="value">
+						<div class="m-b-5">{logged_in_screen_name}</div>
+					</div>
+					<div class="action">
+						<a href="/{segment_1}/edit" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="email"}</div>
+					<div class="value">{logged_in_email}</div>
+					<div class="action">
+						<a href="/{segment_1}/username" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="phone"}</div>
+					<div class="value">{phone}</div>
+					<div class="action">
+						<a href="/{segment_1}/edit" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="company"}</div>
+					<div class="value">{company}</div>
+					<div class="action">
+						<a href="/{segment_1}/edit" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="address"}</div>
+					<div class="value">
+                    	{if address}{address}, {/if}{if address_2}{address_2}, {/if}{if city}{city}, {/if}{if state}{state}, {/if}{if zip}{zip}, {/if}{if country}{country}{/if}
+                    </div>
+					<div class="action">
+						<a href="/{segment_1}/edit" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li>
+					{exp:user:profile}
+					<div class="field">{exp:ilum_wallet:lang key="notifications"}</div>
+					<div class="value text-uppercase" id="accept_messages_setting">
+                    	{if accept_messages == 'y'}<span class="text-success">{exp:ilum_wallet:lang key="yes"}</span>{if:else}{exp:ilum_wallet:lang key="no"}{/if}
+                    </div>
+					<div class="action">
+						<div class="switcher switcher-success">
+							<input type="checkbox" name="accept_messages" id="accept_messages"{if accept_messages == 'y'} checked=""{/if} value="y" />
+							<label for="accept_messages"></label>
+						</div>
+					</div>
+					{/exp:user:profile}
+				</li>
+				<li class="setting-title text-uppercase">{exp:ilum_wallet:lang key="security"}</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="password"}</div>
+					<div class="value">********</div>
+					<div class="action">
+						<a href="/{segment_1}/password" class="btn btn-default rippler rippler-inverse">{exp:ilum_wallet:lang key="edit"}</a>
+					</div>
+				</li>
+				<li class="setting-title text-uppercase">{exp:ilum_wallet:lang key="stats"}</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="join_date"}</div>
+					<div class="value">{join_date format="%F %j, %Y"}</div>
+				</li>
+				<li>
+					<div class="field">{exp:ilum_wallet:lang key="last_activity"}</div>
+					<div class="value">{last_activity format="%F %j, %Y"}</div>
+				</li>
+			</ul>
+			<!-- END setting-list -->
+			
+			{exp:user:logout return="/"}<a class="btn btn-danger rippler rippler-default mt-3" href="{url}">{exp:ilum_wallet:lang key="log_out"}</a>{/exp:user:logout}
+            {/exp:user:profile}

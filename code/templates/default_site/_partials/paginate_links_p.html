@@ -1,0 +1,15 @@
+{paginate}
+<nav aria-label="Pagination">
+  <ul class="pagination justify-content-center mt-sm mb-sm">
+  	{pagination_links}
+	{first_page}<li class="page-item"><a class="page-link" href="{pagination_url}"><i class="fal fa-fw fa-chevron-double-left"></i></a></li>{/first_page}
+    {previous_page}<li class="page-item"><a class="page-link" href="{pagination_url}"><i class="fal fa-fw fa-chevron-left"></i></a></li>{/previous_page}
+	{page}
+    <li class="page-item{if current_page} active{/if}"><a class="page-link" href="{pagination_url}">{pagination_page_number}{if current_page} <span class="sr-only">(current)</span>{/if}</a></li>
+	{/page}
+    {next_page}<li class="page-item"><a class="page-link" href="{pagination_url}"><i class="fal fa-fw fa-chevron-right"></i></a></li>{/next_page}
+    {last_page}<li class="page-item"><a class="page-link" href="{pagination_url}"><i class="fal fa-fw fa-chevron-double-right"></i></a></li>{/last_page}
+	{/pagination_links}
+  </ul>
+</nav>
+{/paginate}

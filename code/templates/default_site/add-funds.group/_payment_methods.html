@@ -1,0 +1,7 @@
+{exp:ilum_wallet:payment_methods}
+							  {if no_results}
+							  {!--{redirect="payment-methods/need{if segment_2 == 'insufficient'}/{segment_2}/{segment_3}/{segment_4}{/if}"}--}
+							  <option></option>
+							  {/if}
+							  <option value="{payment_token}">{payment_brand} ••••{payment_last4}</option>
+							  {/exp:ilum_wallet:payment_methods}

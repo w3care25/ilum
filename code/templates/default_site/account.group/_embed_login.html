@@ -1,0 +1,120 @@
+{layout="_layouts/_layout_login"}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="sign_in"} | {site_name}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+  $(document).ready(function() {
+	 {if last_segment == "username_sent"}notifyUsernameSent();{/if}
+	 {if last_segment == "reset_success"}notifyResetSuccess();{/if}
+	 {if last_segment == "deleted"}notifyDeleted();{/if}
+  });
+  
+  var notifyUsernameSent = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="username_sent"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 20000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyResetSuccess = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="reset_password_success"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 20000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyDeleted = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="user_deleted"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 20000,
+		inverseMode: true
+	});
+  };
+</script>
+
+{exp:authenticate:login_form}
+<script>
+  var notifyError = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{global_errors}{error}{/global_errors}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  $(document).ready(function() {
+	 {if total_global_errors > 0}notifyError();{/if}
+  });
+</script>
+{/exp:authenticate:login_form}
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="sign_in"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="sign_in_desc"}{/layout:set}
+{layout:set name="background"}{images_v}/img/login-cover.jpg{/layout:set}
+
+{!-- Content --}				
+				<!-- Social Logins -->
+				{exp:smart_members:social_login attr:class="mb-3" secure_action="yes" secure_return="yes" popup="no"}
+				<input type="hidden" name="providers" id="providers" value="" />
+				{providers}
+				<a href="#" class="no-scroll mr-2" data-toggle="tooltip" title="{exp:ilum_wallet:lang key="login_with"} {provider_label}" data-social-login="{provider_name}"><i class="fab fa-2x fa-{provider_name} fa-fw"></i></a>
+				{/providers}
+				{/exp:smart_members:social_login}
+				
+				<!-- BEGIN login-form -->
+				{exp:authenticate:login_form class="validator" name="login_form"}				
+					<div class="form-group{if field_error:username} has-error{/if}">
+						<label>{exp:ilum_wallet:lang key="email"} {required_v}</label>
+						<input type="text" class="form-control" id="username" name="username" autofocus required autocomplete="off" />
+						{!--<span class="help-block with-errors">{if field_error:username}{exp:stringer}{field_error:username}{/exp:stringer}{/if}</span>--}
+					</div>
+					<div class="form-group{if field_error:password} has-error{/if}">
+						<label>{exp:ilum_wallet:lang key="password"} {required_v}</label>
+						<div class="input-group">
+							<input type="password" class="form-control" id="password_login" name="password" required />
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary password-reveal rippler rippler-default text-center" type="button" tabindex="25"><i class="far fa-fw fa-eye password-show text-white"></i><i class="far fa-eye-slash text-white password-hide hidden"></i></button>
+							</div>
+						</div>
+						{!--<span class="help-block with-errors">{if field_error:password}{exp:stringer}{field_error:password}{/exp:stringer}{/if}</span>--}
+					</div>
+					{if auto_login}
+					<input type="hidden" name="auto_login" value="1" />
+					{/if}
+					<div class="d-flex align-items-center">
+						<button type="submit" class="btn btn-primary width-150 btn-rounded rippler rippler-default">{exp:ilum_wallet:lang key="sign_in"}</button>
+						<a href="/account/forgot" class="m-l-10">{exp:ilum_wallet:lang key="forgot_password"}</a>
+					</div>
+				{/exp:authenticate:login_form}
+				<!-- END login-form -->
+				<div class="login-desc row m-t-30">
+					<div class="col-md-6">
+						<a href="/account/register" class="btn btn-default text-primary btn-rounded rippler rippler-inverse no-text-decoration mb-3">{exp:ilum_wallet:lang key="register_here"}</a>
+					</div>
+					<div class="col-md-6">
+						{exp:channel:entries channel="custom_pages" orderby="date" sort="desc" category="5" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+						<a href="/{url_title}" class="btn btn-sm btn-silver rippler rippler-default btn-block no-text-decoration bg-orange text-white">{title}</a>
+						{/exp:channel:entries}
+					</div>
+				</div>

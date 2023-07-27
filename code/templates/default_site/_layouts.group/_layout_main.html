@@ -1,0 +1,70 @@
+{layout="_layouts/_wrapper"}
+
+{if logged_in && segment_1 != "legal" && segment_1 != "support"}
+{exp:user:profile}
+{if first_name == ''}{redirect="account/register-social"}{/if}
+{/exp:user:profile}
+{/if}
+
+{!-- Pass-Through Variables --}
+{if layout:page_schema}{layout:set name="page_schema"}{layout:page_schema}{/layout:set}{/if}
+{if layout:entry_id}{layout:set name="entry_id"}{layout:entry_id}{/layout:set}{/if}
+{if layout:meta_robots}{layout:set name="meta_robots"}{layout:meta_robots}{/layout:set}{/if}
+{if layout:meta_page_title}{layout:set name="meta_page_title"}{layout:meta_page_title}{/layout:set}{/if}
+{if layout:meta_section}{layout:set name="meta_section"}{layout:meta_section}{/layout:set}{/if}
+{if layout:meta_summary_field}{layout:set name="meta_summary_field"}{layout:meta_summary_field}{/layout:set}{/if}
+{if layout:meta_canon_segments}{layout:set name="meta_canon_segments"}{layout:meta_canon_segments}{/layout:set}{/if}
+{if layout:meta_image}{layout:set name="meta_image"}{layout:meta_image}{/layout:set}{/if}
+{if layout:meta_title}{layout:set name="meta_title"}{layout:meta_title}{/layout:set}{/if}
+{if layout:meta_description}{layout:set name="meta_description"}{layout:meta_description}{/layout:set}{/if}
+{if layout:meta_keywords}{layout:set name="meta_keywords"}{layout:meta_keywords}{/layout:set}{/if}
+{if layout:meta_summary}{layout:set name="meta_summary"}{layout:meta_summary}{/layout:set}{/if}
+{if layout:meta_canon}{layout:set name="meta_canon"}{layout:meta_canon}{/layout:set}{/if}
+{if layout:extra_css}{layout:set name="extra_css"}{layout:extra_css}{/layout:set}{/if}
+{if layout:extra_js_header}{layout:set name="extra_js_header"}{layout:extra_js_header}{/layout:set}{/if}
+{if layout:extra_js_footer}{layout:set name="extra_js_footer"}{layout:extra_js_footer}{/layout:set}{/if}
+{if layout:header_hide}{layout:set name="header_hide"}{layout:header_hide}{/layout:set}{/if}
+{if layout:sidebar_hide}{layout:set name="sidebar_hide"}{layout:sidebar_hide}{/layout:set}{/if}
+{layout:set name="app_class"}{if logged_out}app-header-fixed app-sidebar-fixed app-content-full-width{/if}{/layout:set}
+
+{!-- Layout --}
+		<!-- BEGIN #content -->
+		<div id="content" class="app-content">
+			{if layout:breadcrumbs}
+			<!-- BEGIN breadcrumb -->
+			<ul class="breadcrumb" itemprop="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">HOME</a></li>
+				{layout:breadcrumbs}
+				<li class="breadcrumb-item text-uppercase{if count == total_results} active{/if}">{if count != total_results}<a href="{layout:breadcrumbs_url index='{index}'}">{/if}{value}{if count != total_results}</a>{/if}</li>
+				{/layout:breadcrumbs}
+			</ul>
+			<!-- END breadcrumb -->
+			{/if}
+			{if layout:title}
+			<!-- BEGIN page-header -->
+			{exp:seo_meta_data:meta_tags meta_only="yes" entry_id="{layout:entry_id}"}
+			{if no_results}
+			<h1 class="page-header{if layout:sub_title} mb-0{/if}">
+				{layout:title}
+			</h1>
+			{if layout:sub_title}
+			<h2 class="page-header text-muted">
+				<small>{layout:sub_title}</small>
+			</h2>
+			{/if}
+			{/if}
+			<h1 class="page-header{if layout:sub_title || meta_h2} mb-0{/if}">
+				{if meta_h1}{meta_h1}{if:else}{layout:title}{/if}
+			</h1>
+			{if layout:sub_title || meta_h2}
+			<h2 class="page-header text-muted">
+				<small>{if meta_h2}{meta_h2}{if:else}{layout:sub_title}{/if}</small>
+			</h2>
+			{/if}
+			{/exp:seo_meta_data:meta_tags}
+			<!-- END page-header -->
+			{/if}
+			
+			{layout:contents}
+		</div>
+		<!-- END #content -->

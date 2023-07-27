@@ -1,0 +1,8 @@
+{paginate}
+<nav class="col-md-8">
+  <ul class="pager">
+	{if previous_page}<li class="previous"><a href="{auto_path}"><span aria-hidden="true" rel="prev"><i class="fas fa-fw fa-chevron-left"></i></span> Previous Page</a></li>{/if}
+	{if next_page}<li class="next"><a href="{auto_path}" rel="next">Next Page <span aria-hidden="true"><i class="fas fa-fw fa-chevron-right"></i></span></a></li>{/if}
+  </ul>
+</nav>
+{/paginate}

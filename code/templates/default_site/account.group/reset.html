@@ -1,0 +1,86 @@
+{layout="_layouts/_layout_login"}
+
+{if logged_in}{redirect="/"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="reset_password"} | {site_name}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+	$(document).ready(function() {	
+		var options = {};
+		options.ui = {
+		  container: "#pwdstrength-container",
+		  showVerdictsInsideProgressBar: true,
+		  viewports: {
+			progress: ".pwstrength_viewport_progress"
+		  },
+		  progressExtraCssClasses: "progress-sm"
+		};
+		options.common = {
+		  debug: true,
+		  onLoad: function () {
+			$('#messages').text('{exp:ilum_wallet:lang key="start_typing_password"}');
+		  }
+		};
+		$('#password').pwstrength(options);
+		
+		{if segment_3 == "success"}notifyResetSuccess();{/if}
+	});
+	
+	var notifyResetSuccess = function() {
+	  $.notification({
+		  content: "{exp:ilum_wallet:lang key="reset_password_success"}",
+		  icon: 'fas fa-check',
+		  iconClass: 'bg-gradient-green text-white',
+		  autoclose: false,
+		  inverseMode: true
+	  });
+	};
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="reset_password"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="reset_password_desc"}{/layout:set}
+{layout:set name="background"}{images_v}/img/coming-soon-cover.jpg{/layout:set}
+
+{!-- Content --}  
+				{exp:user:reset_password reset_code="{segment_3}" return="/reset_success" form:class="validator"}
+					{if content}{exp:omg_cp:alert type="danger" dismiss="no"}<strong>{content}</strong>{/exp:omg_cp:alert}{/if}
+					
+  					{if no_results}{exp:omg_cp:alert type="danger" dismiss="no"}{exp:ilum_wallet:lang key="invalid_token"}{/exp:omg_cp:alert}{/if}
+                    
+                	<div class="row">
+                        <div class="form-group col-md-12" id="pwdstrength-container">
+                          <label class="d-flex align-items-center"for="password">{exp:ilum_wallet:lang key="new_password"}&nbsp;{required_v} <div class="pwstrength_viewport_progress ml-auto width-200"></div></label>
+                          <div class="input-group">
+                          	<input type="password" class="form-control" id="password" name="password" pattern="{password_regex_v}" title="{exp:ilum_wallet:lang key="password_desc"}" data-toggle="tooltip" required />
+                            <div class="input-group-append">
+								<button class="btn btn-outline-secondary rippler rippler-default password-reveal text-center" type="button" tabindex="25"><i class="far fa-fw fa-eye password-show text-white"></i><i class="far fa-eye-slash text-white password-hide hidden"></i></button>
+							</div>
+                          </div>
+                          <span class="help-block with-errors"></span>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                          <label for="password_confirm">{exp:ilum_wallet:lang key="confirm_new_password"} {required_v}</label>
+                          <div class="input-group">
+                          	<input type="password" class="form-control" id="password_confirm" name="password_confirm" data-match="#password" data-match-error="{exp:ilum_wallet:lang key="password_match"}" required />
+                            <div class="input-group-append">
+								<button class="btn btn-outline-secondary rippler rippler-default password-reveal text-center" type="button" tabindex="25"><i class="far fa-fw fa-eye password-show text-white"></i><i class="far fa-eye-slash text-white password-hide hidden"></i></button>
+							</div>
+                          </div>
+                          <span class="help-block with-errors"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+						<button type="submit" class="btn btn-primary rippler rippler-default width-200 btn-rounded">{exp:ilum_wallet:lang key="reset_password"}</button>
+						{!--<span class="m-l-20 text-white-transparent-5">
+							{exp:ilum_wallet:lang key="ready_to_login"} &nbsp;
+							<a href="/">{exp:ilum_wallet:lang key="sign_in"}</a>
+						</span>--}
+					</div>
+                {/exp:user:forgot_password}

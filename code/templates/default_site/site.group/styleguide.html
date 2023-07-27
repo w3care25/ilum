@@ -1,0 +1,20 @@
+{layout="_layouts/_layout_main"}
+{if logged_out}{redirect="/"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}Style Guide{/layout:set}
+{layout:set name="meta_description"}{site_name}'s Style Guide{/layout:set}
+{layout:set name="meta_robots"}noindex,nofollow{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}Style Guide{/layout:set}
+{layout:set:append name="breadcrumbs"}Style Guide{/layout:set:append}
+
+{!-- Contents --}
+{styleguide_p}
+		
+		<div class="container">
+			{previous_v}
+		</div>

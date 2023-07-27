@@ -1,0 +1,51 @@
+{layout="_layouts/_layout_main"}
+
+{exp:channel:entries channel="transfer" limit="1" orderby="date" sort="desc" dynamic="no" disable="categories|category_fields|member_data|pagination"}
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="transfer"}{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="transfer"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="transfer_sub_title"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="transfer"}{/layout:set:append}
+
+{!-- Content --}
+			<div class="row">
+			  <div class="col-12">
+			  	<!-- BEGIN card -->
+				<div class="card mb-3">
+				  <!-- BEGIN card-body -->
+				  <div class="card-body">
+				  	{link_list}
+					{if link_list:no_results}
+					{exp:omg_cp:alert type="warning" dismiss="no"}
+					{exp:ilum_wallet:lang key="transfer_no_results"}
+					{/exp:omg_cp:alert}
+					{/if}
+					{if link_list:count == 1}<div class="widget-list widget-list-full-width">{/if}
+					  <a href="{link_list:link}" class="widget-list-item rippler rippler-inverse" target="_blank">
+					    {link_list:image}
+						<div class="widget-list-media widget-list-media-lg">
+						  <img src="{url:resized}" alt="{title}" />
+						</div>
+						{/link_list:image}
+						<div class="widget-list-content">
+						  <h4>{exp:ilum_wallet:lang key="{link_list:lang_key}"}</h4>
+						  <p class="mb-1">{exp:ilum_wallet:lang key="{link_list:lang_key}_desc"}</p>
+						</div>
+						<div class="widget-list-action">
+						  <i class="fa fa-angle-right fa-lg opacity-2"></i>
+						</div>
+					  </a>
+					{if link_list:count == link_list:total_rows}</div>{/if}
+					{/link_list}
+				  </div>
+				  <!-- END card-body -->
+				</div>
+				<!-- END card -->
+			  </div>
+			</div>
+			<!-- END row -->
+{/exp:channel:entries}

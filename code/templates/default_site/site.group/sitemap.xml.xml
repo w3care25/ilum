@@ -1,0 +1,42 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{exp:channel:entries channel="homepage" limit="1" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+<url>
+<loc>{site_url}</loc>
+<lastmod>{edit_date format="%Y-%m-%d"}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+{/exp:channel:entries}
+{exp:channel:entries channel="support" limit="1" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+<url>
+<loc>{site_url}support</loc>
+<lastmod>{edit_date format="%Y-%m-%d"}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+{/exp:channel:entries}
+{exp:channel:entries channel="custom_pages" limit="10000" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+<url>
+<loc>{site_url}{url_title}</loc>
+<lastmod>{edit_date format="%Y-%m-%d"}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+{/exp:channel:entries}
+{exp:channel:entries channel="pages" limit="1" url_title="legal" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+<url>
+<loc>{site_url}{url_title}</loc>
+<lastmod>{edit_date format="%Y-%m-%d"}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+{/exp:channel:entries}
+{exp:channel:entries channel="legal" limit="10000" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+<url>
+<loc>{site_url}legal/{url_title}</loc>
+<lastmod>{edit_date format="%Y-%m-%d"}</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+{/exp:channel:entries}
+</urlset>

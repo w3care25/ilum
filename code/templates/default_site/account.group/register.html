@@ -1,0 +1,175 @@
+{layout="_layouts/_layout_login"}
+
+{if logged_in}{redirect="/"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="sign_up"} | {site_name}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+	$(document).ready(function() {	
+		var options = {};
+		options.ui = {
+		  container: "#pwdstrength-container",
+		  showVerdictsInsideProgressBar: true,
+		  viewports: {
+			progress: ".pwstrength_viewport_progress"
+		  },
+		  progressExtraCssClasses: "progress-sm"
+		};
+		options.common = {
+		  debug: true,
+		  onLoad: function () {
+			$('#messages').text('{exp:ilum_wallet:lang key="start_typing_password"}');
+		  }
+		};
+		$('#password').pwstrength(options);
+        
+        $('.datepicker').datepicker({
+            autoclose: true,
+            endDate: '-{exp:ilum_wallet:min_age format="years"}y',
+            format: 'mm/dd/yyyy'
+        });
+	});
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="sign_up"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="sign_up_desc"}{/layout:set}
+{layout:set name="background"}{images_v}/img/register-cover.jpg{/layout:set}
+
+{!-- Content --}
+				<!-- BEGIN register-form -->
+				{exp:user:register return="/add-funds/register_success" form:class="validator" required="username|first_name|last_name|password|password_confirm"}
+					<!-- BEGIN row -->
+					<div class="row row-space-20">
+                      <div class="form-group col-md-6">
+                        <label for="first_name">{exp:ilum_wallet:lang key="first_name"} {required_v}</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" required autofocus />
+                        <span class="help-block with-errors"></span>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="last_name">{exp:ilum_wallet:lang key="last_name"} {required_v}</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="username">{exp:ilum_wallet:lang key="email"} {required_v}</label>
+                        <input type="email" class="form-control" id="username" name="username"  data-minlength="3" data-remote="/account/field" data-remote-error="{exp:ilum_wallet:lang key="already_taken"}" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+                      
+                      <div class="form-group col-md-6">
+                        <label for="phone">{exp:ilum_wallet:lang key="phone"} {required_v}</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" class="phone" value="" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="company">{exp:ilum_wallet:lang key="company"}</label>
+                        <input type="text" class="form-control" id="company" name="company" value="" />
+                        <span class="help-block with-errors"></span>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="birthday">{exp:ilum_wallet:lang key="birthday"} {required_v}</label>
+                        <input type="tel" class="form-control date datepicker" id="birthday" name="birthday" title="{exp:ilum_wallet:lang key="min_age"}" data-toggle="tooltip" max="{exp:ilum_wallet:min_age format="date"}" value="" />
+                        <span class="help-block with-errors"></span>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="address">{exp:ilum_wallet:lang key="address"} {required_v}</label>
+                          <input type="text" class="form-control" id="address" name="address" required />
+                          <span class="help-block with-errors"></span>
+                        </div>
+
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="address_2" name="address_2" />
+                          <span class="help-block with-errors"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label for="city">{exp:ilum_wallet:lang key="city"} {required_v}</label>
+                        <input type="text" class="form-control" id="city" name="city" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="state">{exp:ilum_wallet:lang key="state_region"} {required_v}</label>
+                        <input type="text" class="form-control" id="state" name="state" title="{exp:ilum_wallet:lang key="state_abbr"}" data-toggle="tooltip" maxlength="2" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="zip">{exp:ilum_wallet:lang key="zip_postal_code"} {required_v}</label>
+                        <input type="tel" class="form-control" id="zip" name="zip" required />
+                        <span class="help-block with-errors"></span>
+                      </div>
+
+                      <div class="form-group col-md-3">
+                        <label for="country">{exp:ilum_wallet:lang key="country"} {required_v}</label>
+                        <select class="form-control" name="country" id="country" required>
+                          {embed="{segment_1}/_country_options" state="US"}
+                        </select>
+                        <span class="help-block with-errors"></span>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-md-6" id="pwdstrength-container">
+                        <label class="d-flex align-items-center"for="password">{exp:ilum_wallet:lang key="password"}&nbsp;{required_v} <div class="pwstrength_viewport_progress ml-auto width-200"></div></label>
+                        <div class="input-group">
+                        	<input type="password" class="form-control" id="password" name="password" pattern="{password_regex_v}" title="{exp:ilum_wallet:lang key="password_desc"}" data-toggle="tooltip" required />
+                            <div class="input-group-append">
+								<button class="btn btn-outline-secondary rippler rippler-default password-reveal text-center" type="button" tabindex="25"><i class="far fa-fw fa-eye password-show text-white"></i><i class="far fa-eye-slash text-white password-hide hidden"></i></button>
+							</div>
+                        </div>
+                        <span class="help-block with-errors"></span>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="password_confirm">{exp:ilum_wallet:lang key="confirm_password"} {required_v}</label>
+                        <div class="input-group">
+                        	<input type="password" class="form-control" id="password_confirm" name="password_confirm" data-match="#password" data-match-error="{exp:ilum_wallet:lang key="password_match"}" required />
+                            <div class="input-group-append">
+								<button class="btn btn-outline-secondary rippler rippler-default password-reveal text-center" type="button" tabindex="25"><i class="far fa-fw fa-eye password-show text-white"></i><i class="far fa-eye-slash text-white password-hide hidden"></i></button>
+							</div>
+                        </div>
+                        <span class="help-block with-errors"></span>
+                      </div>
+                    </div>
+
+					<div class="mb-sm">
+						<div class="checkbox-inline form-group">
+                        	<input type="checkbox" class="form_control" name="accept_terms" id="accept_terms" value="y" required />
+							<label for="accept_terms">{exp:ilum_wallet:lang key="accept_terms"}</label>
+                            <span class="help-block with-errors"></span>
+						</div>
+					</div>
+                    <div class="row">
+                      <div class="col-md-12 mb-sm">
+                        {captcha}
+                      </div>
+                    </div>
+					<div class="d-flex align-items-center">
+						<button type="submit" class="btn btn-primary rippler rippler-default width-200 btn-rounded">{exp:ilum_wallet:lang key="sign_up"}</button>
+						<span class="m-l-20 text-white-transparent-5">
+							{exp:ilum_wallet:lang key="already_have_account"} &nbsp;
+							<a href="/">{exp:ilum_wallet:lang key="sign_in"}</a>
+						</span>
+					</div>
+				{/exp:user:register}
+				<!-- END register-form -->

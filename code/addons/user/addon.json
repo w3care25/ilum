@@ -1,0 +1,16 @@
+{
+    "name": "User",
+    "shortname": "user",
+    "version": "5.1.2",
+    "foundation_version": "4.2.0",
+    "description": "Create powerful and flexible member management areas using regular EE templates.",
+    "license": "EEHarbor",
+    "namespace": "EEHarbor\\User",
+    "require": {
+        "php": ">=5.3.*",
+        "expressionengine/core": ">=2.11"
+    },
+    "resources": {
+        "themes": true
+    }
+}

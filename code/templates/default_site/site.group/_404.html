@@ -1,0 +1,23 @@
+{layout="_layouts/_layout_main"}
+{exp:seo_meta_data:robot_redirector}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="page_not_found"}{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+
+{!-- Contents --}
+<!-- BEGIN error -->
+		<div class="error-page">
+			<div class="error-page-content">
+				<div class="error-page-icon"><i class="fa fa-check-circle"></i></div>
+				<h1>{exp:ilum_wallet:lang key="oops"}</h1> 
+				<h3>{exp:ilum_wallet:lang key="cant_find_page"}</h3>
+				<p class="m-b-40">
+					{exp:ilum_wallet:lang key="error_code"} <b>404</b>
+				</p>
+			</div>
+		</div>
+		<!-- END error -->

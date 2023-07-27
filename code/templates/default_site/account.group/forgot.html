@@ -1,0 +1,63 @@
+{layout="_layouts/_layout_login"}
+
+{if logged_in}{redirect="/"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="forgot_password"} | {site_name}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+  $(document).ready(function() {
+  	 {if last_segment == "success"}notifySuccess();{/if}
+	 {if title == "Error"}notifyError();{/if}
+  });
+  
+  var notifySuccess = function() {
+	$.notification({
+		content: "{exp:ilum_wallet:lang key="forgot_password_success"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: false,
+		inverseMode: true
+	});
+  };
+
+  var notifyError = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="forgot_password_error"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="forgot_password"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="forgot_password_desc"}{/layout:set}
+{layout:set name="background"}{images_v}/img/bg.jpg{/layout:set}
+
+{!-- Content --}
+				{exp:user:forgot_password password_reset_template="{segment_1}/reset/%id%" password_reset_email_subject="Password Reset Request" password_reset_email_template="{segment_1}/_password_reset_email_template" return="{segment_1}/forgot/success" error_page="{segment_1}/forgot" form:class="validator"}
+                	<div class="row">
+                        <div class="form-group col-md-12">
+                          <label for="username">{exp:ilum_wallet:lang key="email"} {required_v}</label>
+                          <input type="email" class="form-control" id="email" name="email" required autofocus autocomplete="off" />
+                          {!--<span class="help-block with-errors"></span>--}
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+						<button type="submit" class="btn btn-primary rippler rippler-default width-200 btn-rounded">{exp:ilum_wallet:lang key="submit_request"}</button>
+						<span class="m-l-20 text-white-transparent-5">
+							{exp:ilum_wallet:lang key="remember_password"} &nbsp;
+							<a href="/">{exp:ilum_wallet:lang key="sign_in"}</a>
+						</span>
+					</div>
+                {/exp:user:forgot_password}

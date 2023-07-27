@@ -1,0 +1,10 @@
+{if segment_1}
+{exp:channel:entries channel="custom_pages" limit="1" url_title="{segment_1}" require_entry="yes" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+{if no_results}
+{if logged_in}{embed="site/_homepage"}{if:else}{embed="account/_embed_login"}{/if}
+{/if}
+{embed="site/_custom" entry_id="{entry_id}"}
+{/exp:channel:entries}
+{if:else}
+{if logged_in}{embed="site/_homepage"}{if:else}{embed="account/_embed_login"}{/if}
+{/if}

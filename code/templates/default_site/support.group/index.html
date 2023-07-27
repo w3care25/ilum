@@ -1,0 +1,66 @@
+{layout="_layouts/_layout_main"}
+
+{exp:channel:entries channel="support" limit="1" orderby="date" sort="desc" dynamic="no" require_entry="yes" disable="categories|category_fields|member_data|pagination"}
+{if no_results}{redirect="404"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="entry_id"}{entry_id}{/layout:set}
+{layout:set name="page_schema"}ContactPage{/layout:set}
+{layout:set name="meta_title"}{support_name} - {site_name}{/layout:set}
+{layout:set name="meta_canon_segments"}1{/layout:set}
+{layout:set name="meta_summary_field"}summary{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script>
+  $(document).ready(function() {
+	 {if last_segment == "success"}notifySuccess();{/if}
+  });
+  
+  var success_message = (function() {/*{form_success_message}*/}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
+  
+  var notifySuccess = function() {
+	$.notification({
+		content: success_message,
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 20000,
+		inverseMode: true
+	});
+  };
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{title}{/layout:set}
+{layout:set name="sub_title"}{sub_title}{/layout:set}
+{layout:set:append name="breadcrumbs"}{support_name}{/layout:set:append}
+
+{!-- Content --}
+						<div class="section-content">
+							<div class="section-body">
+								<div class="form form-contact">
+										<header class="form-head content">
+											{text}
+										</header><!-- /.form-head -->
+
+										<div class="card m-b-15">
+											<!-- BEGIN card-body -->
+											<div class="card-body">
+												{if logged_in}
+												{exp:user:profile}
+												{exp:freeform_next:render form="support_form" submit_class="btn btn-primary rippler rippler-default" class="validator freeform" use_required_attribute="yes" instructions_class="hidden tooltip-info" return="/{segment_1}/success" override_values:first_name="{first_name}" override_values:last_name="{last_name}" override_values:phone="{phone}" override_values:email="{logged_in_email}"}
+												{/exp:user:profile}
+												{if:else}
+												{exp:freeform_next:render form="support_form" submit_class="btn btn-primary rippler rippler-default" class="validator freeform" use_required_attribute="yes" instructions_class="hidden tooltip-info" return="/{segment_1}/success"}
+												{/if}
+											</div>
+											<!-- END card-body -->
+										</div>
+										<!-- END card -->
+								</div><!-- /.form -->
+							</div><!-- /.section-body -->
+						</div><!-- /.section-content -->
+
+{/exp:channel:entries}

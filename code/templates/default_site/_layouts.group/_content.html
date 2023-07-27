@@ -1,0 +1,471 @@
+{if last_segment == "success"}
+{exp:omg_cp:alert type="success" dismiss="yes"}
+{exp:channel:entries channel="support" limit="1" orderby="date" sort="desc" dynamic="no" disable="categories|category_fields|member_data|pagination"}
+{if no_results}<b>The form has been successfully submitted!</b> Thank you for your time.{/if}
+{form_success_message}
+{/exp:channel:entries}
+{/exp:omg_cp:alert}
+{/if}
+
+{exp:channel:entries entry_id="{embed:entry_id}" limit="1" dynamic="no" status="not deleted" disable="categories|category_fields|member_data|pagination"}
+{fluid_content}
+
+{fluid_content:accordion}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+      {if content:count == 1}
+      <div id="accordion-{fluid_content:count}" class="accordion">
+        {/if}
+        <div class="card border-primary mb-0">
+          <div class="card-header bg-primary text-white btn btn-link p-sm collapsed" id="heading{fluid_content:count}-{content:count}" data-toggle="collapse" data-target="#collapse{fluid_content:count}-{content:count}" aria-expanded="false" aria-controls="collapse{fluid_content:count}-{content:count}">
+            <h5 class="mb-0 text-left text-white">
+              {content:title}
+              <i class="fal fa-caret-up show-only float-right"></i><i class="fas fa-caret-down collapsed-only float-right"></i>
+            </h5>
+          </div>
+          <div id="collapse{fluid_content:count}-{content:count}" class="collapse" aria-labelledby="heading{fluid_content:count}-{content:count}" data-parent="#accordion-{fluid_content:count}">
+            <div class="card-body content">
+              {content:text}
+            </div>
+          </div>
+        </div>
+        {if content:count == content:total_rows}
+      </div>
+      {/if}
+      {/content}
+    </div>
+  </div>
+</div>
+{/fluid_content:accordion}
+
+{fluid_content:button}
+<div class="container-fluid">
+  <div class="row mt-2 mb-3">
+    <div class="col-md-12">
+      {content}
+      {if content:file}
+      {content:file}
+      <a href="{url}"{if extension == "jpg" || extension == "png" || extension == "gif" || extension == "jpeg"} data-fancybox="image{fluid_content:count}" data-caption="{title}"{if:else} target="_blank"{/if} class="btn btn-primary">{exp:omg_cp:file_icon mime="{mime_type}"} {content:label}</a>
+      {/content:file}
+      {if:elseif content:external_url}
+      <a href="{content:external_url}" target="_blank" class="btn btn-primary">{content:label}</a>
+      {if:else}
+      {content:link}
+      <a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}" class="btn btn-primary">{content:label}</a>
+      {/content:link}
+      {/if}
+      {/content}
+    </div>
+  </div>
+</div>
+{/fluid_content:button}
+
+{fluid_content:button_group}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    {content}
+    <div class="col-md-3 col-xs-6">
+      {if content:file}
+      {content:file}
+      {if extension == "jpeg" || extension == 
+      "jpg" || extension == "png" || extension == "gif"}
+      <a href="{url}" data-fancybox="group{fluid_content:count}>" data-caption="{title}" class="no-text-decoration">
+        <img src="{url:thumb}" class="img-fluid rounded" alt="{title}">
+        <h3 class="text-center">{title}</h3>
+      </a>
+      {if:else}
+      <a href="{url}" target="_blank" class="no-text-decoration">
+        {exp:omg_cp:file_icon mime="{mime_type}" class="icon-lg mb-3"}
+        <h3 class="text-center no-text-decoration">{title}</h3>
+      </a>
+      {/if}
+      {/content:file}
+      {if:else}
+      {content:link}
+      <a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}" class="no-text-decoration">
+        {if content:link:entry_image}
+        {content:link:entry_image}
+        <img src="{url:small}" class="img-fluid rounded" alt="{title}">
+        {/content:link:entry_image}
+        {if:else}
+        <img src="https://v4wu8f00-a.akamaihd.net/omg/deploy/build/assets/images/temp/monster-3.jpg" class="img-fluid rounded" alt="{content:link:title}" />
+        {/if}
+        <h3 class="text-center no-text-decoration">{content:link:title}</h3>
+      </a>
+      {/content:link}
+      {/if}
+    </div>
+    {/content}
+  </div>
+</div>
+{/fluid_content:button_group}
+
+{fluid_content:call_to_action}
+<div class="row mt-3 mb-3">
+  <div class="col-md-12">
+    {content}
+    <div id="carousel-{fluid_content:count}" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          {content:image}
+          <img class="d-block w-100" src="{url:resized}" alt="{title}">
+          {/content:image}
+          <div class="carousel-caption d-none d-md-block">
+            {if content:title}<h5>{content:title}</h5>{/if}
+            {if content:text}<p>{content:text}</p>{/if}
+            {content:link}<a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}" class="btn btn-primary">{if content:button_label}{content:button_label}{if:else}Read More{/if}</a>{/content:link}
+          </div>
+        </div> 
+      </div>
+    </div>
+    {/content}
+  </div>
+</div>
+{/fluid_content:call_to_action}
+
+{fluid_content:custom_code}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+    </div>
+  </div>
+</div>
+{/fluid_content:custom_code}
+
+{fluid_content:features}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    {content}
+    <div class="col-sm-6 col-md-4 col-lg-3 d-flex">
+      <div class="card">
+        {content:image}
+        {content:link}<a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}">{/content:link}
+        <img class="card-img-top" src="{url:resized}" alt="{title}">
+        {content:link}</a>{/content:link}
+        {/content:image}
+        <div class="card-body">
+          <h3 class="card-title">{content:title}</h3><!-- /.card-title -->
+
+          <div class="card-text content">
+            {content:text}
+          </div><!-- /.card-entry -->
+          {content:link}
+          <div class="text-center mt-3">
+            <a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}" class="btn btn-outline-primary">Read More</a>
+          </div><!-- /.card-actions -->
+          {/content:link}
+        </div><!-- /.card-body -->
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+    {/content}
+  </div>
+</div>
+{/fluid_content:features}
+
+{fluid_content:form}
+<div class="container-fluid">
+  <div class="card m-b-15">
+    <!-- BEGIN card-body -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 custom-form freeform">
+          {content}
+        </div>
+      </div>
+    </div>
+    <!-- END card-body -->
+  </div>
+  <!-- END card -->
+</div>
+{/fluid_content:form}
+
+{fluid_content:image}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+      <img src="{url:resized}" alt="{title}" class="img-fluid mx-auto display-block" />
+      {/content}
+    </div>
+  </div>
+</div>
+{/fluid_content:image}
+
+{fluid_content:images}
+<div class="container-fluid">
+  {content}
+  {if content:count == 1 || content:count % 4 == 1}
+  <div class="row mt-3 mb-3">
+    {/if}
+    <div class="col-md-3 col-xs-6">
+      {content:file}
+      <a href="{url}" data-fancybox="gallery-{fluid_content:count}" data-caption="{title}">
+        <img src="{url:resized}" alt="{title}" class="img-thumbnail">
+      </a>
+      {/content:file}
+    </div>
+    {if content:count == content:total_rows || content:count % 4 == 0}
+  </div>
+  {/if}
+  {/content}
+</div>
+{/fluid_content:images}
+
+{fluid_content:monstrous_email_form}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+    </div>
+  </div>
+</div>
+{/fluid_content:monstrous_email_form}
+
+{fluid_content:profiles}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    {content}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      {content:link}<a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}">{/content:link}
+      <div class="card bg-dark text-white">
+        {content:image}
+        <img class="card-img" src="{url:resized}" alt="{title}">
+        {/content:image}
+        <div class="card-img-overlay text-center">
+          <h5 class="card-title">{content:name}</h5>
+          <p class="card-text">{content:position}</p>
+        </div>
+      </div>
+      {content:link}</a>{/content:link}
+    </div><!-- /.col -->
+    {/content}
+  </div>
+</div>
+{/fluid_content:profiles}
+
+{fluid_content:section_title}
+<div class="container-fluid">
+  {content}
+  <section class="section section--main" id="section-{fluid_content:count name="section_title"}">
+    <div class="container-fluid">  
+      <h2>{content:title}</h2>
+      {if content:sub_title}<h3 class="title--default">{content:sub_title}</h3>{/if}
+    </div><!-- /.container-fluid -->
+  </section><!-- /.section -->
+  {/content}
+</div>
+{/fluid_content:section_title}
+
+{fluid_content:slider}
+<div class="row{if fluid_content:count == 1} mt-3{/if} mb-3">
+  <div class="col-md-12">
+    {content}
+    {if content:count == 1}
+    <div id="carousel-{fluid_content:count}" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        {/if}
+        <li data-target="#carousel-{fluid_content:count}" data-slide-to="{exp:omg_cp:simple_math var1='{content:count}' operation='-' var2='1'}"{if content:count == 1} class="active"{/if}></li>
+        {if content:count == content:total_rows}
+      </ol>
+      {/if}
+      {/content}
+      {content}
+      {if content:count == 1}
+      <div class="carousel-inner">
+        {/if}
+        <div class="carousel-item{if content:count == 1} active{/if}">
+          {content:link}<a href="{exp:omg_cp:rel_url entry_id="{content:link:entry_id}"}">{/content:link}
+          {content:image}
+          <img class="d-block w-100" src="{url:resized}" alt="{title}">
+          {/content:image}
+          {if content:title || content:text}
+          <div class="carousel-caption d-none d-md-block">
+            {if content:title}<h5>{content:title}</h5>{/if}
+            {if content:text}<p>{content:text}</p>{/if}
+          </div>
+          {/if}
+          {content:link}</a>{/content:link}
+        </div>
+        {if content:count == content:total_rows}      
+      </div>
+      {if content:count > 1}
+      <a class="carousel-control-prev" href="#carousel-{fluid_content:count}" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-{fluid_content:count}" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      {/if}
+    </div>
+    {/if}
+    {/content}
+  </div>
+</div>
+{/fluid_content:slider}
+
+{fluid_content:table}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover dataTable" width="100%" cellspacing="0">
+          {content}
+          {if is_first_row}
+          <thead class="thead-dark">
+            <tr>
+              {columns}
+              <th class="text-center">{value}</th>
+              {/columns}
+            </tr>
+          </thead>
+          <tfoot class="thead-dark">
+            <tr>
+              {columns}
+              <th class="text-center">{value}</th>
+              {/columns}
+            </tr>
+          </tfoot>
+          {/if}
+          {/content}
+          <tbody>
+            {content}
+            {if !is_first_row}
+            <tr>
+              {columns}
+              <td>{value}</td>
+              {/columns}
+            </tr>
+            {/if}
+            {/content}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{/fluid_content:table}
+
+{fluid_content:tabs}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+      {if content:count == 1}
+      <ul class="nav nav-tabs" id="tabs-{fluid_content:count}" role="tablist">
+        {/if}
+        <li class="nav-item">
+          <a class="nav-link{if content:count == 1} active{/if}" id="tab{fluid_content:count}-{content:count}" data-toggle="tab" href="#content{fluid_content:count}-{content:count}" role="tab" aria-controls="content{fluid_content:count}-{content:count}" aria-selected="true">{content:title}</a>
+        </li>
+        {if content:count == content:total_rows}
+      </ul>
+      {/if}
+      {/content}
+      {content}
+      {if content:count == 1}
+      <div class="tab-content" id="tabs-{fluid_content:count}-content">
+        {/if}
+        <div class="tab-pane fade{if content:count == 1} show active{/if} content p-sm" id="content{fluid_content:count}-{content:count}" role="tabpanel" aria-labelledby="tab{fluid_content:count}-{content:count}">
+          {content:text}
+        </div>
+        {if content:count == content:total_rows}
+      </div>
+      {/if}
+      {/content}
+    </div>
+  </div>
+</div>
+{/fluid_content:tabs}
+
+{fluid_content:testimonials}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {content}
+      {if content:count == 1}<div class="list-group">{/if}
+      <div class="list-group-item">
+        <div class="media">
+          {if content:count == 1 || content:count % 2 == 1}
+          {content:image}
+          <img class="mr-3" src="{url:resized}" class="img-thumbnail" alt="{title}">
+          {/content:image}
+          <div class="media-body p-3">
+            <h5>{content:name}{if content:position} <small>{content:postion}</small>{/if}</h5>
+            <i class="fas fa-quote-left fa-3x fa-pull-left fa-border"></i>
+            <div class="content">
+              {content:testimonial}
+            </div>
+          </div>
+          {/if}
+          {if content:count == 2 || content:count % 2 == 0}
+          <div class="media-body text-right p-3">
+            <h5>{content:name}{if content:position} <small>{content:postion}</small>{/if}</h5>
+            <i class="fas fa-quote-right fa-3x fa-pull-right fa-border"></i>
+            <div class="content">
+              {content:testimonial}
+            </div>
+          </div>
+          {content:image}
+          <img class="ml-3" src="{url:resized}" class="img-thumbnail" alt="{title}">
+          {/content:image}
+          {/if}
+        </div>
+      </div>
+      {if content:count == content:total_rows}</div>{/if}
+      {/content}
+    </div>
+  </div>
+</div>
+{/fluid_content:testimonials}
+
+{fluid_content:text}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12 content">
+      {content}
+    </div>
+  </div>
+</div>
+{/fluid_content:text}
+
+{fluid_content:text_image}
+<div class="container-fluid">
+  {content}
+  <div class="row flex-row{if content:image_position == "right"}-reverse{/if} align-items-center">
+    <div class="col-md-4">
+      {content:image}
+      <div class="vertical-middle">
+        <img src="{url:small}" alt="{title}" class="img-fluid">
+      </div>
+      {/content:image}
+    </div><!-- /.col -->
+    <div class="col-md-8 content">
+      {content:text}
+    </div>
+  </div>
+  {/content}
+</div>
+{/fluid_content:text_image}
+
+{fluid_content:video}
+<div class="container-fluid">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+      {exp:antenna url="{content}" force_https="true" youtube_rel="0" youtube_showinfo="0" vimeo_byline="false" vimeo_title="false" vimeo_portrait="false"}
+      {if embed_code}
+      <div class="embed-responsive embed-responsive-16by9">
+        {embed_code}										
+      </div>
+      {/if}		
+      {/exp:antenna}
+    </div>
+  </div>
+</div>
+{/fluid_content:video}
+
+{/fluid_content}
+{/exp:channel:entries}

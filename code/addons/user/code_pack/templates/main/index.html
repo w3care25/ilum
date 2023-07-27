@@ -1,0 +1,100 @@
+{embed="%prefix%inc/index" page_title="{if segment_2 == "" OR segment_2 == logged_in_member_id}My {/if}Profile"}
+	</head>
+
+	<body role="document">
+
+{embed="%prefix%inc/header" page="account"}
+
+		<div class="container">
+
+			<div class="page-header">
+				<h1>{if segment_2 == "" OR segment_2 == logged_in_member_id}My {/if}Profile</h1>
+				<p class="lead">This page shows the profile of a given member.</p>
+			</div>
+			<div class="row">
+{if logged_in} {!-- START - Make sure the user is logged in before displaying profiles --}
+				{exp:user:profile
+				{if segment_2}
+					member_id="{segment_2}"
+				{/if}
+				}
+				<div class="col-sm-3">
+					{embed="%prefix%inc/profile_column" member_id="{member_id}" profile_active="yes"}
+				</div>
+				<div class="col-sm-9">
+					<h2 style="margin-bottom:20px;">{screen_name}</h2>
+					<div class="panel panel-default">
+						<div class="panel-heading"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> &nbsp; Stats</div>
+						<ul class="list-group">
+							<li class="list-group-item">
+								<strong>Join Date:</strong> &nbsp;
+								{join_date format="%F %j, %Y"}
+							</li>
+							<li class="list-group-item">
+								<strong>Last Activity:</strong> &nbsp;
+								{last_activity format="%F %j, %Y"}
+							</li>
+							<li class="list-group-item">
+								<strong>Total Entries:</strong> &nbsp;
+								{if last_entry_date == "0"}
+									This user has not published any entries yet.
+								{if:else}
+									{total_entries} &nbsp; <i>(last published: {last_entry_date format="%F %j, %Y"})</i>
+								{/if}
+									&nbsp; <a href="{path='%prefix%main/user_entries'}/{member_id}/">view all &rarr;</a>
+							</li>
+							<li class="list-group-item">
+								<strong>Total Comments:</strong> &nbsp;
+								{if last_comment_date == "0"}
+									This user has not posted any comments yet.
+								{if:else}
+									{total_comments} &nbsp; <i>(last posted: {last_comment_date format="%F %j, %Y"})</i>
+								{/if}
+									&nbsp; <a href="{path='%prefix%main/user_comments'}/{member_id}/">view all &rarr;</a>
+							</li>
+						</ul>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; Profile</div>
+						<ul class="list-group">
+							{fields}
+                            <li class="list-group-item">
+                                <strong>{field_label}:</strong> &nbsp;
+                                <span id="{field_name}">
+								{if field_type == "date"}
+									{field_value format="%F %j, %Y"}
+								{if:else}
+									{field_value}
+								{/if}
+                                </span>
+                            </li>
+							{/fields}
+						</ul>
+					</div>
+				</div>
+				{if no_results}
+					<div class="col-xs-12">
+						<div class="alert alert-danger" role="alert">
+							<p class="lead"><strong>Error!</strong> The account you specified does not exist.</p>
+						</div>
+					</div>
+				{/if}
+				{/exp:user:profile}
+{/if} {!-- END - Make sure the user is logged in before displaying profiles --}
+{if logged_out} {!-- START - If logged out, show the Login form --}
+				<div class="col-xs-12">
+					{embed="%prefix%inc/login"}
+				</div>
+{/if} {!-- END - If logged out, show the Login form --}
+      		</div>
+
+			<div class="well ss-pageinfo">
+				<h2>About This Page</h2>
+				<p>The "Profile" page shows the profile of a given member. Additionally, a special "Profile" menu on the left is called, which creates a shortcut for sending a private message, and links to view that users' comments and entries.</p>
+				<p>It makes use of the following tags:</p>
+				<ul>
+					<li><a href="https://eeharbor.com/user/documentation/profile">User:Profile</a> to show profile information.</li>
+				</ul>
+			</div>
+
+{embed="%prefix%inc/footer"}

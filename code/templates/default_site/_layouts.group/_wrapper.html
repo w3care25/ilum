@@ -1,0 +1,211 @@
+{exp:ilum_wallet:app_uuid_login}
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/{if layout:page_schema}{layout:page_schema}{if:else}WebPage{/if}">
+<head>
+	{exp:seo_meta_data:tag_manager}
+	{exp:seo_meta_data:meta_tags {if layout:entry_id}entry_id="{layout:entry_id}"{/if} {if layout:meta_robots}robots="{layout:meta_robots}"{/if} {if layout:meta_page_title}page_title="{layout:meta_page_title}"{/if} {if layout:meta_section}section="{layout:meta_section}"{/if} {if layout:meta_summary_field}summary_field="{layout:meta_summary_field}"{/if} {if layout:meta_canon_segments}canon_segments="{layout:meta_canon_segments}"{/if} {if layout:meta_image}image="{layout:meta_image}"{/if} {if layout:meta_title}title="{layout:meta_title}"{/if} {if layout:meta_description}description="{layout:meta_description}"{/if} {if layout:keywords}keywords="{layout:meta_keywords}"{/if} {if layout:meta_summary}summary="{layout:meta_summary}"{/if} {if layout:meta_canon}canonical="{layout:meta_canon}"{/if}}
+	{exp:minimee:css}
+	<link rel="stylesheet" href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/css/app.min.css" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-keytable-bs4/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
+	<link href="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="https://v4wu8f00-a.akamaihd.net/vendor/bootstrap3-jasny/css/jasny-bootstrap.min.css" />
+	<link rel="stylesheet" href="https://v4wu8f00-a.akamaihd.net/vendor/bootstrap-animations/bootstrap-anim.css" />
+	<link rel="stylesheet" href="https://v4wu8f00-a.akamaihd.net/vendor/rippler/css/rippler.min.css">
+	<link rel="stylesheet" href="https://v4wu8f00-a.akamaihd.net/omg/omg.helpers.css" />
+	<link rel="stylesheet" href="/css/omg.adjustments.css" />
+	{/exp:minimee:css}
+	{if layout:extra_css}{layout:extra_css}{/if}
+	{if layout:extra_js_header}{layout:extra_js_header}{/if}
+</head>
+
+<body>
+	{exp:seo_meta_data:tag_manager tag="body"}
+    
+	<!--website designed by Omaha Media Group LLC - All Rights Reserved | www.omahamediagroup.com | support[at]omahamediagroup.com | 402.218.4423-->
+
+    <!--lets get it started, lets get it started in here-->
+	
+	<div class="loading" id="loading"><i class="fas fa-circle-notch fa-spin fa-5x fa-fw text-white"></i><span class="sr-only">Loading...</span></div>
+	
+	<!-- BEGIN #page-container -->
+	<div id="app" class="app {if layout:app_class}{layout:app_class}{if:else}app-header-fixed app-sidebar-fixed app-theme-orange app-sidebar-dark app-sidebar-minified{/if}">
+		
+		{if layout:header_hide != "yes"}
+		{exp:ilum_wallet:app_header}
+		<!-- BEGIN #header -->
+		<header id="header" class="app-header">
+			{if logged_in}
+			<!-- BEGIN navbar-toggle-minify -->
+			<button type="button" class="navbar-toggle navbar-toggle-minify rippler rippler-inverse" data-click="sidebar-minify">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<!-- END navbar-toggle-minify -->
+			{/if}
+			<!-- BEGIN navbar-header -->
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">
+					<b>{exp:ilum_wallet:lang key="onme"}</b>{exp:ilum_wallet:lang key="wallet"}
+				</a>
+				{if logged_in}
+				<div class="nav-item d-lg-none">
+					<a href="/account" class="nav-link no-scroll rippler rippler-inverse">
+						<i class="fas fa-user-circle text-muted nav-icon fa-2x pt-1"></i>
+					</a>
+				</div>
+				{/if}
+				{!--<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>--}
+			</div>
+			<!-- END navbar-header -->
+			<!-- BEGIN navbar-nav -->
+			<ul class="navbar-nav navbar-right">
+				{if logged_out}
+				<li class="nav-item d-block">
+					<a href="/account" class="nav-link rippler rippler-inverse">
+						<span class="d-block">{exp:ilum_wallet:lang key="sign_in"} / {exp:ilum_wallet:lang key="sign_up"}</span>
+					</a>
+				</li>
+				{/if}
+				{if logged_in}
+				<a href="/" class="nav-item d-lg-none rippler rippler-inverse{if !segment_1 || segment_1 == "success"} bg-orange{/if}">
+					<div class="nav-link">
+						<i class="fas fa-tachometer-alt"></i>
+					</div>
+				</a>
+				<a href="/add-funds" class="nav-item d-lg-none rippler rippler-inverse{if segment_1 == "add-funds"} bg-orange{/if}">
+					<div class="nav-link">
+						<i class="fas fa-dollar-sign"></i>
+					</div>
+				</a>
+				<a href="/transfer" class="nav-item d-lg-none rippler rippler-inverse{if segment_1 == "transfer"} bg-orange{/if}">
+					<div class="nav-link">
+						<i class="fas fa-share"></i>
+					</div>
+				</a>
+				<a href="/payment-methods" class="nav-item d-lg-none rippler rippler-inverse{if segment_1 == "payment-methods"} bg-orange{/if}">
+					<div class="nav-link">
+						<i class="fas fa-credit-card"></i>
+					</div>
+				</a>
+				{!--<a href="/account" class="nav-item d-lg-none rippler rippler-inverse{if segment_1 == "account"} bg-orange{/if}">
+					<div class="nav-link">
+						<i class="fas fa-user"></i>
+					</div>
+				</a>--}
+				<li class="nav-item dropdown d-none d-lg-block">
+					<a href="#" data-toggle="dropdown" data-display="static" class="nav-link float-right rippler rippler-inverse no-scroll">
+						<span class="d-md-block">{logged_in_screen_name} <b class="caret"></b></span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item rippler rippler-default" href="/account">{exp:ilum_wallet:lang key="my_profile"}</a>
+						<div class="dropdown-divider"></div>
+						{exp:user:logout return="/"}<a class="dropdown-item" href="{url}">{exp:ilum_wallet:lang key="log_out"}</a>{/exp:user:logout}
+					</div>
+				</li>
+				{/if}
+			</ul>
+			<!-- END navbar-nav -->
+		</header>
+		<!-- END #header -->
+		
+		{if layout:sidebar_hide != "yes" && logged_in}
+		<!-- BEGIN #sidebar -->
+		<sidebar id="sidebar" class="app-sidebar">
+			<!-- BEGIN scrollbar -->
+			<div data-scrollbar="true" data-height="100%">
+				<!-- BEGIN nav -->
+				<ul class="nav">
+					<li{if !segment_1 || segment_1 == "success"} class="active"{/if}>
+						<a href="/" class="rippler rippler-inverse">
+							<span class="nav-icon"><i class="fas fa-tachometer-alt"></i></span>
+							<span class="nav-text">{exp:ilum_wallet:lang key="dashboard"}</span>
+						</a>
+					</li>
+					<li{if segment_1 == "add-funds"} class="active"{/if}>
+						<a href="/add-funds" class="rippler rippler-inverse">
+							<span class="nav-icon"><i class="fas fa-dollar-sign"></i></span>
+							<span class="nav-text">{exp:ilum_wallet:lang key="add_funds"}</span>
+						</a>
+					</li>
+					<li{if segment_1 == "transfer"} class="active"{/if}>
+						<a href="/transfer" class="rippler rippler-inverse">
+							<span class="nav-icon"><i class="fas fa-share"></i></span>
+							<span class="nav-text">{exp:ilum_wallet:lang key="transfer"}</span>
+						</a>
+					</li>
+					<li{if segment_1 == "payment-methods"} class="active"{/if}>
+						<a href="/payment-methods" class="rippler rippler-inverse">
+							<span class="nav-icon"><i class="fas fa-credit-card"></i></span>
+							<span class="nav-text">{exp:ilum_wallet:lang key="payment_methods"}</span>
+						</a>
+					</li>
+				</ul>
+				<!-- END nav -->
+			</div>
+			<!-- END scrollbar -->
+		</sidebar>
+		<!-- END #sidebar -->
+		{/if}
+		{/exp:ilum_wallet:app_header}
+		{/if}
+		
+		{layout:contents}
+		
+		<!-- BEGIN #footer -->
+		<div id="footer" class="app-footer text-center">
+			{exp:ilum_wallet:lang key="copyright"} &copy; <span itemprop="copyrightYear">{current_time format="%Y"}</span> <span itemprop="copyrightHolder">{exp:ilum_wallet:lang key="ilum"}</span>. {exp:ilum_wallet:lang key="patent_pending"}. {site_name} {exp:ilum_wallet:lang key="version"}<br>
+			<a href="{support_url}">{support_name}</a> | {exp:channel:entries channel="legal" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination" backspace="3"}<a href="{legal_url}/{url_title}">{title}</a> | {/exp:channel:entries}
+		</div>
+		<!-- END #footer -->
+		
+		<!-- BEGIN btn-scroll-top -->
+		<a href="#" data-click="scroll-top" class="btn-scroll-top fade rippler rippler-default"><i class="fa fa-arrow-up"></i></a>
+		<!-- END btn-scroll-top -->
+	</div>
+	<!-- END #app -->
+
+	{exp:minimee:js}
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/js/app.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/vendor/jquery-mask/jquery.mask.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/vendor/bootstrap3-validator/validator.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-keytable-bs4/js/keyTable.bootstrap4.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-rowgroup/js/dataTables.rowGroup.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/datatables.net-rowgroup-bs4/js/rowGroup.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://v4wu8f00-a.akamaihd.net/vendor/bootstrap3-jasny/js/jasny-bootstrap.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/pwstrength-bootstrap/dist/pwstrength-bootstrap.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/app/admetro/admin/template/dist/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/vendor/rippler/js/jquery.rippler.min.js"></script>
+	<script src="/js/omg.custom.js"></script>
+	{/exp:minimee:js}
+	{if logged_out}{embed="account/_login_modal"}{/if}
+	{if layout:extra_js_footer}{layout:extra_js_footer}{/if}
+	
+	{recaptcha:script:html}
+	
+	<!--thats all folks, thanks for playing-->
+	
+</body>
+</html>

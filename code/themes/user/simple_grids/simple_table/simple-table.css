@@ -1,0 +1,39 @@
+.simple-table thead .toolbar,
+.blocksft .tbl-list .simple-table thead .toolbar {
+    position: absolute;
+    top: -2px;
+    right: 12px;
+}
+.blocksft .tbl-list .simple-table thead .toolbar {
+    top: 3px;
+}
+.field-control textarea.simple-table--input {
+    border: 0;
+    -webkit-box-shadow: none;
+    -mox-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    font: normal normal 14px Helvetica, Arial, Sans-Serif;
+    resize: none;
+}
+.simple-table td[data-column-id] {
+    padding: 0;
+}
+.simple-table .tbl-wrap + .toolbar {
+    display: inline-block !important;
+}
+tbody .simple-table tbody td {
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+tbody .simple-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+tbody tr:last-child .simple-table td:first-child,
+tbody tr:last-child .simple-table td:last-child {
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+}

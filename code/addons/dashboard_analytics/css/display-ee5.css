@@ -1,0 +1,17 @@
+.da-comment-alert {
+	border-color: #ffea8d;
+}
+.da-rt-col .da-table th {
+	background: #008da7;
+}
+.da-rt-devices .desktop, .da-rt-device-legend .desktop {
+	background: #01bf75;
+	color: #FFF;
+}
+.da-rt-devices .tablet, .da-rt-device-legend .tablet {
+	background: #c3dce3;
+}
+.da-rt-devices .mobile, .da-rt-device-legend .mobile {
+	background: #008da7;
+	color: #FFF;
+}

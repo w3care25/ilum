@@ -1,0 +1,76 @@
+{embed="%prefix%inc/index" page_title="Update My Profile"}
+	</head>
+
+	<body role="document">
+
+{embed="%prefix%inc/header" page="account"}
+
+		<div class="container">
+
+			<div class="page-header">
+				<h1>Update My Profile</h1>
+				<p class="lead">This page allows the currently logged in user to edit their basic profile information.</p>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					{if segment_3 == "updated"}
+						<div class="alert alert-success" role="alert">
+							<p class="lead">Your profile has been successfully updated!</p>
+						</div>
+					{/if}
+					<h4>Fill in or edit the fields below to update your profile:</h4>
+				</div>
+			</div>
+
+			<div class="row">
+{if logged_in} {!-- START - Make sure the user is logged in for updating account --}
+				{exp:user:edit
+					return="%prefix%main/update_profile/updated"
+					screen_name_password_required="no"
+					error_page="%prefix%inc/error_template"
+				}
+				<div class="col-sm-6">
+					<p>
+						<label for="screen_name">Screen Name</label>
+						<input type="text" name="screen_name" id="screen_name" placeholder="Enter screen name here" value="{screen_name}" class="form-control">
+					</p>
+				</div>
+			{fields}
+				<div class="col-sm-6">
+					<p>
+						<label for="url">{field_label}</label>
+					{if field_type == "text"}
+						<input type="text" name="{field_name}" id="{field_name}" placeholder="Enter {field_label} here" value="{field_value}" class="form-control">
+					{if:elseif field_type == "textarea"}
+						<textarea name="{field_name}" id="{field_name}" placeholder="Enter {field_label} here" class="form-control" rows="5">{field_value}</textarea>
+					{if:else}
+						<input type="text" name="{field_name}" id="{field_name}" placeholder="Enter {field_label} here" value="{field_value}" class="form-control">
+					{/if}
+					</p>
+				</div>
+			{/fields}
+				<div class="col-xs-12">
+					<p>
+						<button type="submit" class="btn btn-lg btn-success">Update</button>
+					</p>
+				</div>
+				{/exp:user:edit}
+{/if} {!-- END - Make sure the user is logged in for updating account --}
+{if logged_out} {!-- START - If logged out, show the Login form --}
+				<div class="col-xs-12">
+					{embed="%prefix%inc/login"}
+				</div>
+{/if} {!-- END - If logged out, show the Login form --}
+      		</div>
+
+			<div class="well ss-pageinfo">
+				<h2>About This Page</h2>
+				<p>The "Update Profile" page allows the currently logged in user to edit their basic profile information.</p>
+				<p>It makes use of the following tags:</p>
+				<ul>
+					<li><a href="https://eeharbor.com/user/documentation/edit">User:Edit</a> to edit profile information.</li>
+				</ul>
+			</div>
+
+{embed="%prefix%inc/footer"}

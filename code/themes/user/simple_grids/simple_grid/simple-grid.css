@@ -1,0 +1,14 @@
+.simple-grid .toggle-btn {
+    padding-bottom: 6px;
+}
+.simple-grid .toggle-btn.on .slider::before {
+    right: -6px;
+    top: 3px;
+}
+/** only newly added grid rows get the .grid-toggle class **/
+.simple-grid .grid-toggle .toggle-btn.on .slider::before {
+    margin-right: 10px
+}
+.simple-grid .tbl-wrap + .toolbar {
+    display: inline-block !important;
+}

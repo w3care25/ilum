@@ -1,0 +1,32 @@
+/* Stylesheet Omaha Media Group - www.omahamediagroup.com | (402) 218-4423 | support@omahamediagroup.com */
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
+
+body, p { font-family: "Open Sans",sans-serif; font-weight: 400; font-size: .8125rem; color: #000; }
+
+a { color: #007aff; text-decoration: none; }
+a:hover, a:focus { color: #003166; text-decoration: underline; }
+
+h2, h3, h4, h5, h6 { font-family: inherit; font-weight: 600; color: inherit; }
+
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+blockquote { position: relative; padding: 58px 90px; background: #f2f2f2; font-family: "Roboto Slab",serif; font-size: 16px !important; text-align: center; color: #2a2a2a; }
+blockquote::before { content: "“"; left: 11px; top: -25px; }
+blockquote::after { content: "”"; right: 15px; top: calc(100% - 115px); }
+blockquote:before, blockquote:after { position: absolute; font-size: 195.91px; color: #ef4135; opacity: 0.76; }
+
+ul { margin-left: 20px; }
+ul li { list-style-type: disc; }
+ul ul { padding-bottom: 0; }
+ul ul li { list-style-type: circle; }
+ol { margin-left: 20px; }
+ol li { list-style-type: decimal; }
+ol ol { padding-bottom: 0; }
+ol ol li { list-style-type: lower-alpha; }
+table { margin: 0 auto; }
+img { padding: 10px; }

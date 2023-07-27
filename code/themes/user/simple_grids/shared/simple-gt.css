@@ -1,0 +1,37 @@
+.simple-gt.fieldset-faux {
+    padding: 0;
+}
+.blocksft .simple-gt .reorder-col .reorder {
+    display: none;
+}
+.blocksft .simple-gt .ui-sortable-handle {
+    display: none;
+}
+.blocksft .simple-gt .reorder-col {
+    padding: 0;
+    width: 30px;
+}
+.blocksft .simple-gt tbody .reorder-col::before {
+    content: "\f0c9";
+    font-size: 12px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+    font-family: FontAwesome;
+    color: #ccc;
+}
+.blocksft .simple-gt tbody .reorder-col:hover {
+    cursor: move;
+}
+.blocksft .simple-gt tbody tr:hover .reorder-col::before {
+    color: #009ae1;
+}
+tbody td.solo {
+    text-align: center;
+    font-size: 14px;
+}
+.simple-gt .reorder-col {
+    /* Need important b/c something is adding display:block inline,
+    which does not work in Chrome when a Grid is nested inside of another Grid */
+    display: table-cell !important;
+}

@@ -1,0 +1,347 @@
+{layout="_layouts/_layout_main"}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="payment_methods"}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+{!--<script src="https://js.stripe.com/v3/"></script>--}
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script>
+  //prevent toasts
+  respond_toasts = 1;
+  
+  $(document).ready(function() {
+  	 {!--var stripe = Stripe('{exp:ilum_wallet:stripe_public_key}');
+	 
+	 var checkoutButton = document.getElementById('checkout-button');
+
+	  checkoutButton.addEventListener('click', function() {
+		stripe.redirectToCheckout({
+		  // Make the id field from the Checkout Session creation API response
+		  // available to this file, so you can provide it as argument here
+		  // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+		  sessionId: '{exp:ilum_wallet:stripe_create_new_session}'
+		}).then(function (result) {
+		  // If `redirectToCheckout` fails due to a browser or network
+		  // error, display the localized error message to your customer
+		  // using `result.error.message`.
+		  alert(result.error.message)
+		});
+	  });--}
+	 
+	 $('.stripe-button-el span').attr('style', '');
+	 $('.stripe-button-el').addClass('btn btn-info float-left mr-2 rippler rippler-inverse').prepend('<i class="fas fa-fw fa-credit-card"></i> ').removeClass('stripe-button-el');
+	 $('#payment_row, .btn-dark').removeClass('hidden');
+	 setInterval(function(){ 
+	 	if($('input[name=stripeToken]').val()) {
+			$('.card-loader').removeClass('hidden');
+			$('#loading').removeClass('hidden');
+		}
+	 }, 500);
+	 
+	 {if last_segment == "cc_success"}notifyCC();{/if}
+	 {if last_segment == "ba_success"}notifyBA();{/if}
+	 {if last_segment == "token_default"}notifyDefault();{/if}
+	 {if last_segment == "token_deleted"}notifyDelete();{/if}
+	 {if segment_2 == "cc_failed"}notifyCCFailed();{/if}
+	 {if segment_2 == "ba_failed"}notifyBAFailed();{/if}
+	 {if last_segment == "token_default_error"}notifyDefaultFailed();{/if}
+	 {if last_segment == "token_delete_error"}notifyDeleteFailed();{/if}
+	 {if segment_2 == "need"}notifyNeed();{/if}
+	 {if segment_3 == "insufficient"}insufficientWarning();{/if}
+  });
+  
+  var notifyCC = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="new_credit_card"}",
+		content: "{exp:ilum_wallet:lang key="credit_card_added"}",
+		icon: 'fas fa-credit-card',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyBA = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="new_bank_account"}",
+		content: "{exp:ilum_wallet:lang key="bank_account_added"}",
+		icon: 'fas fa-piggy-bank',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyDefault = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="new_default_method"}",
+		content: "{exp:ilum_wallet:lang key="new_default_method_desc"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyDelete = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="token_deleted"}",
+		content: "{exp:ilum_wallet:lang key="token_deleted_desc"}",
+		icon: 'fas fa-check',
+		iconClass: 'bg-gradient-green text-white',
+		autoclose: true,
+		autocloseTime: 10000,
+		inverseMode: true
+	});
+  };
+  
+  var notifyCCFailed = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="credit_card_failed"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  var notifyBAFailed = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="bank_account_failed"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  var notifyDefaultFailed = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="new_default_method_error"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  var notifyDeleteFailed = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="token_deleted_error"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  var notifyNeed = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="payment_method_needed"}",
+		content: "{exp:ilum_wallet:lang key="payment_method_needed_desc"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-yellow text-white',
+		autoclose: false,
+		btn: false
+	});
+  };
+  
+  var insufficientWarning = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="warning"}",
+		content: "{exp:ilum_wallet:lang key="insufficient_funds_txn_warning"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-yellow text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  $(document).ready(function () {
+			$("#ick_add_new").validate({
+				rules: {
+					ick_first_name: "required",
+					ick_last_name: "required",
+					ick_card_number: {
+						required: true,
+						number: true //for length of lastname
+					},
+					ick_card_expiration: {
+						required: true,
+						number: true
+					},
+					ick_card_cvv: {
+						required: true,
+						number: true
+					}
+				},
+				messages: {
+					firstname: " Please enter your firstname",
+					lastname: " Please enter your lastname",
+					ick_card_number: {
+						required: " Please enter a card number"
+					},
+					ick_card_expiration: {
+						required: " Please enter a card expiration"
+					},
+					ick_card_cvv: {
+						required: " Please enter a card cvv"
+					}
+				}
+			});
+		});
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="payment_methods"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="payment_methods"}{/layout:set:append}
+{!-- {exp:ilum_wallet:ick_live_security_key} {exp:ilum_wallet:ick_test_mode} --}
+
+{!-- Content --}
+<!-- BEGIN row -->			
+			<div class="row" id="payment_row">
+			  <div class="col-12 mb-2">
+				{exp:ilum_wallet:stripe_new_credit_card_form return="{if segment_3 == 'insufficient'}add-funds/{segment_3}/{segment_4}/{segment_5}{if:else}payment-methods/cc_success{/if}" error_return="payment-methods/cc_failed{if segment_3 == 'insufficient'}/{segment_3}/{segment_4}/{segment_5}{/if}"}
+				{!--<button type="button" class="rippler rippler-default btn btn-info float-left mr-2 rippler-inverse" id="checkout-button"><i class="fas fa-fw fa-credit-card"></i> <span>{exp:ilum_wallet:lang key="new_card"}</span></button>--}
+				{exp:ilum_wallet:plaid_new_bank_account_form class="btn btn-dark rippler rippler-default" icon="fas fa-fw fa-piggy-bank" return="{if segment_3 == 'insufficient'}add-funds/{segment_3}/{segment_4}/{segment_5}{if:else}payment-methods/ba_success{/if}" error_return="payment-methods/ba_failed{if segment_3 == 'insufficient'}/{segment_3}/{segment_4}/{segment_5}{/if}"}
+			    {if "{exp:ilum_wallet:ick_live_security_key}"}
+    			    <button type="button" class="rippler rippler-default btn btn-info float-left mr-2 rippler-inverse" data-toggle="modal" data-target="#addIckModal" style="position: absolute;top: 0;left: 19%;">
+    			        <i class="fas fa-fw fa-credit-card"></i> 
+    			        <span>{exp:ilum_wallet:lang key="ick_new_card"} </span>
+    			    </button>
+			    {/if}
+			  </div>
+			</div>
+			
+			<div class="row">
+			  <div class="col-12">
+				<!-- BEGIN card -->
+				<div class="card w-100">
+				  <div class="widget-list">
+				    {exp:ilum_wallet:payment_methods}
+					{if no_results}
+					{exp:omg_cp:alert type="warning" dismiss="no" class="mb-0"}
+					{exp:ilum_wallet:lang key="no_payment_methods"}
+					{/exp:omg_cp:alert}
+					{/if}
+					<div class="widget-list-item">
+					  <div class="widget-list-media">
+						<i class="fas fa-fw fa-{if payment_type == "card"}credit-card{if:elseif payment_type == "bank_account"}piggy-bank{/if} {if expired}bg-gradient-pink{if:elseif default_method}bg-gradient-green{if:elseif payment_type == "card"}bg-gradient-cyan-blue{if:else}bg-gradient-silver-black{/if} icon text-white"></i>
+					  </div>
+					  <div class="widget-list-content">
+						<h4 class="mb-2">{payment_brand}{if expired} <span class="label label-danger">{exp:ilum_wallet:lang key="expired"}</span>{/if} {if default_method} <span class="label label-success">{exp:ilum_wallet:lang key="default"}</span>{/if}</h4>
+						<p>••••{payment_last4}{if payment_exp} | {exp:ilum_wallet:lang key="expiry"} {payment_exp}{/if}</p>
+					  </div>
+					  <div class="widget-list-action">
+						<div class="dropdown dropdown-icon">
+						  <a href="#" data-toggle="dropdown" class="text-muted"><i class="fas fa-ellipsis-h"></i></a>
+						  <div class="dropdown-menu dropdown-menu-right">
+							{if !default_method}<a href="#modalDefault-{payment_token}" data-toggle="modal" data-target="#modalDefault-{payment_token}" class="dropdown-item rippler rippler-inverse">{exp:ilum_wallet:lang key="set_as_default"}</a>{/if}
+							<a href="#modalDelete-{payment_token}" data-toggle="modal" data-target="#modalDelete-{payment_token}" class="dropdown-item text-danger rippler rippler-inverse">{exp:ilum_wallet:lang key="delete_payment_method"}</a>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- BEGIN modal -->
+					{if !default_method}
+					<div class="modal modal-cover modal-inverse fade" id="modalDefault-{payment_token}">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header p-b-xs">
+							<h3 class="modal-title text-success">{exp:ilum_wallet:lang key="set_as_default"}</h3>
+							<button class="close" data-dismiss="modal">&times;</button>
+						  </div>
+						  <div class="modal-body">
+							<p class="m-b-lg">
+							  {exp:ilum_wallet:lang key="set_as_default_desc"}
+							</p>
+							<h4 class="mb-2">{payment_brand}</h4>
+							<p>••••{payment_last4}{if payment_exp} | {exp:ilum_wallet:lang key="expiry"} {payment_exp}{/if}</p>
+						  </div>
+						  <div class="modal-footer text-right">
+						  	<button type="button" class="btn btn-default btn-lg rippler rippler-inverse" data-dismiss="modal">{exp:ilum_wallet:lang key="close"}</button>
+						  	<a href="/?ACT={exp:ilum_wallet:action_id action="token_set_default"}&token={payment_token}&ret=/{segment_1}/token_default&error=/{segment_1}/token_default_error" class="btn btn-success btn-lg rippler rippler-default show-loading">{exp:ilum_wallet:lang key="set_as_default"}</a>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- END modal -->
+					{/if}
+					<!-- BEGIN modal -->
+					<div class="modal modal-cover modal-inverse fade" id="modalDelete-{payment_token}">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header p-b-xs">
+							<h3 class="modal-title text-danger">{exp:ilum_wallet:lang key="delete_payment_method"}</h3>
+							<button class="close" data-dismiss="modal">&times;</button>
+						  </div>
+						  <div class="modal-body">
+							<p class="m-b-lg">
+							  {exp:ilum_wallet:lang key="delete_payment_method_desc"}
+							</p>
+							<h4 class="mb-2">{payment_brand}</h4>
+							<p>••••{payment_last4}{if payment_exp} | {exp:ilum_wallet:lang key="expiry"} {payment_exp}{/if}</p>
+						  </div>
+						  <div class="modal-footer text-right">
+						  	<button type="button" class="btn btn-default btn-lg rippler rippler-inverse" data-dismiss="modal">{exp:ilum_wallet:lang key="close"}</button>
+						  	<a href="/?ACT={exp:ilum_wallet:action_id action="token_delete"}&token={payment_token}&ret=/{segment_1}/token_deleted&error=/{segment_1}/token_delete_error" class="btn btn-danger btn-lg rippler rippler-default show-loading">{exp:ilum_wallet:lang key="delete_payment_method"}</a>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- END modal -->
+					{/exp:ilum_wallet:payment_methods}
+					
+					<div class="card-loader hidden">
+					  <div class="d-flex justify-content-center"> 
+						<div class="spinner-border text-primary"></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<!-- END card -->
+			  </div>
+			</div>
+			<!-- END row -->
+			<!--- ICK Add Card Popup -->
+                    <div class="modal modal-cover modal-inverse fade" id="addIckModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header p-b-xs">
+                            <h3 class="modal-title text-danger">{exp:ilum_wallet:lang key="ick_add_new_card"}</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              &times;
+                            </button>
+                          </div>
+                          
+                              <div class="modal-body">
+    							<p class="m-b-lg">
+    							  {exp:ilum_wallet:lang key="ick_add_new_card_desc"}
+    							</p>
+    							{exp:ilum_wallet:ick_add_card_form}
+    							 
+    						  </div>
+    						  
+                        </div>
+                      </div>
+                    </div>

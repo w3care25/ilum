@@ -1,0 +1,164 @@
+{layout="_layouts/_layout_main"}
+
+{!-- Meta Variables --}
+{layout:set name="page_schema"}ProfilePage{/layout:set}
+{layout:set name="meta_robots"}noindex,nofollow{/layout:set}
+{layout:set name="meta_page_title"}{layout:set name="meta_title"}{exp:ilum_wallet:lang key="add_funds"} - {exp:ilum_wallet:lang key="apple_pay"}{/layout:set}
+
+{exp:ilum_wallet:applepay_checkout_form id="applepay_form" submit_return="{current_url}" error_return="CANCEL_RETURN/error"}
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  //prevent toasts
+  respond_toasts = 1;
+  
+  var stripe = Stripe('{exp:ilum_wallet:stripe_public_key}', {
+	apiVersion: "2019-02-19",
+  });
+  var elements = stripe.elements();
+  
+  var notifyError = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="applepay_error"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  {if error}
+  var notifyOtherError = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{error}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  $(document).ready(function() {
+  	notifyOtherError();
+  });
+  {if:else}
+  var clientSecret = '{client_secret}';
+  
+  var paymentRequest = stripe.paymentRequest({
+	country: 'US',
+	currency: 'usd',
+	total: {
+	  label: '{exp:ilum_wallet:lang key="ilum_wallet"}',
+	  amount: {amount_pennies},
+	},
+	requestPayerName: false,
+	requestPayerEmail: false,
+  });
+  
+  $(document).ready(function() {
+  	var prButton = elements.create('paymentRequestButton', {
+	  paymentRequest: paymentRequest,
+	});
+
+	// Check the availability of the Payment Request API first.
+	paymentRequest.canMakePayment().then(function(result) {
+	  if (result) {
+		prButton.mount('#applepay-payment-request-button');
+	  } else {
+		document.getElementById('applepay-payment-request-button').style.display = 'none';
+		notifyError();
+	  }
+	});
+	
+	paymentRequest.on('paymentmethod', function(ev) {
+	  // Confirm the PaymentIntent without handling potential next actions (yet).
+	  stripe.confirmCardPayment(
+		clientSecret,
+		{payment_method: ev.paymentMethod.id},
+		{handleActions: false}
+	  ).then(function(confirmResult) {
+		if (confirmResult.error) {
+		  // Report to the browser that the payment failed, prompting it to
+		  // re-show the payment interface, or show an error message and close
+		  // the payment interface.
+		  ev.complete('fail');
+		} else {
+		  // Report to the browser that the confirmation was successful, prompting
+		  // it to close the browser payment method collection interface.
+		  ev.complete('success');
+		  // Check if the PaymentIntent requires any actions and if so let Stripe.js
+		  // handle the flow. If using an API version older than "2019-02-11" instead
+		  // instead check for: `paymentIntent.status === "requires_source_action"`.
+		  if (confirmResult.paymentIntent.status === "requires_action") {
+			// Let Stripe.js handle the rest of the payment flow.
+			stripe.confirmCardPayment(clientSecret).then(function(result) {
+			  if (result.error) {
+			  	//alert('error');
+				window.location.href = "{error_return}";
+			  } else {
+			  	//alert('success');
+				$('#applepay_form').submit();
+			  }
+			});
+		  } else {
+		  	//alert('success');
+			$('#applepay_form').submit();
+		  }
+		}
+	  });
+	});
+  });
+  {/if}
+</script>
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="add_funds"}{/layout:set}
+{layout:set name="sub_title"}{exp:ilum_wallet:lang key="apple_pay"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="add_funds"}{/layout:set:append}
+{layout:set:append name="breadcrumbs_url"}{if cancel_return}{cancel_return}{if:else}/{segment_1}{/if}{/layout:set:append}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="apple_pay"}{/layout:set:append}
+
+{!-- Contents --}
+<!-- BEGIN card -->
+					{exp:omg_cp:alert type="danger" dismiss="no" class="hidden"}
+					{exp:ilum_wallet:lang key="applepay_error"}
+					{/exp:omg_cp:alert}
+					
+					{if !error}
+					<div class="card text-left">
+					  <div class="card-body p-0">
+					    <div class="block-loading hidden d-flex align-items-center justify-content-center" id="total_loading"><i class="fas fa-circle-notch fa-spin fa-5x fa-fw text-white"></i><span class="sr-only">Loading...</span></div>
+						
+						<div class="table-responsive">
+						  <table class="table m-b-0">
+							<tbody>
+							  <tr>
+								<td><b>{exp:ilum_wallet:lang key="total_charge"}</b></td>
+								<td class="text-right">{exp:ilum_wallet:lang key="$"}{amount}</td>
+							  </tr>
+							  <tr>
+								<td><b>{exp:ilum_wallet:lang key="ilum_bucks"}</b></td>
+								<td class="text-right">{exp:ilum_wallet:lang key="$"}{amount_ilum}</td>
+							  </tr>
+							</tbody>
+						  </table>
+					  	</div>
+					  </div>
+					  <div class="card-footer d-block text-right">
+						<span id="applepay-payment-request-button"></span>
+						
+						<a href="{if cancel_return}{cancel_return}{if:else}/{segment_1}{/if}" class="btn btn-block mt-3 btn-default btn-lg rippler rippler-inverse">{exp:ilum_wallet:lang key="cancel"}</a>
+					  </div>
+					</div>
+  					<!-- /.card -->
+					{/if}
+{/exp:ilum_wallet:applepay_checkout_form}

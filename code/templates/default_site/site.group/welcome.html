@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Welcome Home | {site_name}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<link href="https://www.omahamediagroup.com" id="Designed by" title="Omaha Media Group an Omaha, Nebraska Web Design Company" />
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700" type="text/css" media="all" />
+	<link rel="stylesheet" href="https://v4wu8f00-a.akamaihd.net/omg/mobile-legacy/css/style.css" type="text/css" media="all" />
+	<script src="https://v4wu8f00-a.akamaihd.net/omg/mobile-legacy/js/jquery-1.11.0.min.js"></script>
+	<script src="https://v4wu8f00-a.akamaihd.net/omg/mobile-legacy/js/modernizr.js"></script>
+</head>
+
+<body class="system-message">
+<div class="wrapper">
+	
+	<div class="wrapper-content">
+		<header class="header">
+			<h1 class="logo">
+				<a class="logo-about">Omaha Media Group</a>
+			</h1>
+		</header>
+		<!-- /.header -->
+
+		<div class="main">
+			<section class="section-aboutus">
+				{if logged_in}
+				{exp:omg_cp:can_access_cp}
+				<div class="section-head">
+					<h3>Welcome Home</h3>
+				</div>
+				<!-- /.section-head -->
+
+				<div class="section-body">
+					<h2>Contents</h2>
+
+					<ul>
+						<li><a href="{site_url}welcome#welcome">Welcome</a></li>
+						<li><a href="{site_url}welcome#login">Login</a></li>
+						<li><a href="{site_url}welcome#editing">Site Editing</a>
+						<ul>
+							<li><a href="{site_url}welcome#editing">Overview</a></li>
+							<li><a href="{site_url}welcome#publish">Creating /&nbsp;Editing a Channel Entry</a></li>
+							<li><a href="{site_url}welcome#date">Date Tab</a></li>
+							<li><a href="{site_url}welcome#categories">Categories Tab</a></li>
+							<li><a href="{site_url}welcome#options">Options Tab</a></li>
+							<li><a href="{site_url}welcome#seo">SEO Meta Data Tab</a></li>
+							<li><a href="{site_url}welcome#revisions">Revisions Tab</a></li>
+							<li><a href="{site_url}welcome#profile">Sidebar</a></li>
+						</ul>
+						</li>
+						<li><a href="{site_url}welcome#profile">My Profile</a></li>
+						<li><a href="{site_url}welcome#support">Support</a></li>
+					</ul>
+
+					<p>&nbsp;</p>
+
+					<h2><a id="welcome" name="welcome"></a>Welcome</h2>
+
+					<p>&nbsp;</p>
+
+					<p>Dear <strong>{site_name}</strong>,</p>
+
+					<p>Welcome to your new website home! We&rsquo;ve enjoyed doing business with you and seeing your project from start&nbsp;to finish is such a fun process for us! To help you get settled in, we&rsquo;ve compiled a few helpful tips on updating and&nbsp;editing your site. If you have any questions, please send us an email at&nbsp;<a href="mailto:support@omahamediagroup.com">support@omahamediagroup.com</a>&nbsp;or use the <a href="{site_url}welcome#support">support link</a> down below&nbsp;and our&nbsp;help desk will assist you in every way possible.</p>
+
+					<p>Sincerely,<br />
+					<strong>Omaha Media Group</strong></p>
+
+					<p>&nbsp;</p>
+
+					<h2><a id="login" name="login"></a>Login</h2>
+
+					<p>&nbsp;</p>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_login_screen.jpg" /></p>
+
+					<p><strong>Your Website URL:</strong> {site_url}</p>
+
+					<p><strong>To Edit Your Website:</strong> {site_url}omgcp</p>
+
+					<p>Your username and password will be given to you during the on-boarding&nbsp;process. If you lose or forget your information, you can utilize the&nbsp;<strong>Remind Me</strong>&nbsp;feature or contact us at <a href="mailto:support@omahamediagroup.com">support@omahamediagroup.com</a>. We can also setup additional accounts and access groups for you as well!</p>
+
+					<p>&nbsp;</p>
+
+					<h2><a id="editing" name="editing"></a>Site Editing</h2>
+
+					<p>&nbsp;</p>
+
+					<h3>Channel</h3>
+
+					<p>A Channel is where your current content is placed. When you publish new content, a new Channel is automatically&nbsp;created.</p>
+
+					<h3>Create Tab</h3>
+
+					<p>Creates new entries in a selected channel.</p>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_content_publish_menu.jpg" /></p>
+
+					<h3>Edit Tab</h3>
+
+					<p>Make changes to the content already published to your website.</p>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_content_edit_menu.jpg" /></p>
+
+					<p>Once you select an option from the submenu, you will be taken to a listing of existing entries.</p>
+
+					<p style="text-align: center;"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_edit_list.jpg" /></p>
+
+					<p>On this screen, you can select and remove entries permanently, filter the list down even further, or select an entry to edit. You can also edit common properties and categories in bulk by selecting multiple entries at once.</p>
+
+					<h3><a id="publish" name="publish"></a>Publishing /&nbsp;Editing a Channel Entry</h3>
+
+					<p>Publishing or Editing a&nbsp;Channel Entry is simple.</p>
+
+					<p>The <strong>Title</strong> is the name you want to give the entry.</p>
+
+					<p>The <strong>URL title</strong> is automatically filled out for you, so you don&#39;t even have to touch it.</p>
+					
+					<p>The <strong>Summary</strong> field is for a brief summary of the page. This is used for SEO meta data, site search engines, and even listing pages.</p>
+					
+					<p>The <strong>Entry Image</strong> field is used to select or upload an image to be used to represent this entry. This can be used for SEO Meta Data, site search engines, listing pages, and other possible uses.</p>
+					
+					<p><strong>Content</strong> is a dynamic field that allows to you to select from a number of elements/widgets (can vary from site-to-site) and allows the editor to display custom content in various formats. The most common of these widgets is the <b>Text</b> element.</p>
+
+					<p>The <strong>Text</strong> editor is known as a WYSIWYG (pronounced wiz&shy;-e-&shy;wig). This stands for&nbsp;&ldquo;what you see is what you get&rdquo;. Here you can change the text, font, add images, etc. It should look fairly familiar to you if you&#39;ve used Microsoft Word or a similar publishing program. It even has spell check.</p>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_edit_entry.jpg" /></p>
+
+					<p><strong>NOTE:</strong> When published to the site, the content in the WYSIWYG may appear differently than it does in the editor. For a preview of your site&#39;s styles, view your <a href="{site_url}styleguide" target="_blank">Style Guide</a>&nbsp;page.</p>
+
+					<p>Here is a quick overview of several oft-asked about functions of the text editor:</p>
+
+					<h4>Line Breaks</h4>
+
+					<p>To start a new paragraph, hit the ENTER key.</p>
+
+					<p>To start a new line, hit SHIFT + ENTER (simultaneously).</p>
+
+					<h4>Change Font, Font Size or Text Color</h4>
+
+					<p>You may be wondering where these are at? They are disabled. Generally, we want to leave control of these features to the website&#39;s Style Sheets. This helps ensure a uniform look across all pages and is more attractive to Search Engines. You can use the Normal and Styles buttons to access predefined styles which may alter font, size and/or color but complete access to these features is restricted. If the Colors button is available, it will be restricted to colors used on the site.</p>
+
+					<h4>Copying and Pasting Content</h4>
+
+					<p>If you already have content written in a document, such as Microsoft Word, you can copy and paste it into your&nbsp;content editor with one added step. Once your content has been copied, click on the Paste from Word or Paste as Plain Text&nbsp;button (they look like this: <img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/wygwam_paste_buttons.jpg" style="height:35px; width:78px" />&nbsp; and paste your&nbsp;content into the window. This removes the spacing and formatting code that is automatically developed from your&nbsp;Word editor.</p>
+
+					<h4>Add an Image</h4>
+
+					<p>In the Editor toolbar, click the Image button (&nbsp;<img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/wygwam_image_button.jpg" style="height:20px; width:24px" />&nbsp;). You will then be presented with the window you see below. You can paste an image URL here to use an existing image or click the Browse Server button to select an image from your site or upload a new one.</p>
+
+					<p style="text-align: center;"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/wygwam_image_box.jpg" style="height: 494px; width: 440px;" /></p>
+
+					<p>You can use the search box to filter the images you&#39;ve already uploaded. If you want to upload a new image, click the Upload New File button in the bottom, left-hand corner (you may need to select a directory first if one is not defaulted to)&nbsp;and you will be walked through the process of selecting and uploading a new image.</p>
+
+					<p>Image size and links can be setup in the main Image window, as well as custom styles, so play around with it a bit.</p>
+
+					<h4>Add a Link</h4>
+
+					<p>First, type the text that you want to turn into a link. Highlight it and then click the Link button ( <img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/wygwam_link_button.jpg" style="height:19px; width:21px" />&nbsp;) in the toolbar. The window that appears is similar to the Image window. You can paste a link to any website in the URL box (ex: http://www.google.com) or click Browse Server to select a file to link to. You can upload a new file using the Upload New File button (you may need to select a directory first if one is not defaulted to). When you&#39;re done, the text you highlighted will link to the file or page you selected.</p>
+
+					<h4>Other Fields</h4>
+
+					<p>Some Channel Entry forms will have additional fields for addition content types on their respective pages (ex: the Homepage Sliders field generally found on the Homepage channel). Instructions are provided at the top of each field to help explain what needs to be there and where the content will be used.</p>
+
+					<h3><a id="date" name="date"></a>Date Tab</h3>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_tab_date.jpg" /></p>
+
+					<p><strong>Entry Date:</strong> This is automatically populated with the current time but you can adjust it to a different time. If you adjust it to a future time and date, that entry will not be displayed on the Website until the current time matches the time of the entry. This is useful for pre-publishing blogs or holiday-themed content. Also, on pages where we list multiple entries as links, those are generally organized by most recent to oldest so you can change the Entry Date in order to affect the order if desired.</p>
+
+					<p><strong>Expiration Date:</strong> Select a date and time here if you would like the entry to not be displayed on the Website after it &quot;expires&quot;. Useful for seasonal content and prevents you from having to remember to take it down.</p>
+
+					<h3><a id="categories" name="categories"></a>Categories Tab</h3>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_tab_categories.jpg" /></p>
+
+					<p><strong>NOTE:</strong> This tab may not contain any categories on certain channels, as they are not always necessary.</p>
+
+					<p>This tab allows you select one or multiple categories to publish the entry to. This is generally used for organizational purposes. Blogs have categories so a user can select a category and see all the other blogs in that category. We also use Main Page and Sub Page categories quite often. This determines if the content in the entry appears on the sections landing page (Main Page) or if it appears on a separate page in that section (Sub Page). Generally, Sub Page is automatically selected for you.</p>
+
+					<p>For certain Category Groups, we may give you permission to Add, Edit, Delete and Reorganize categories. Mostly for groups like Blog where you&#39;ll be able to add as many categories as you need.</p>
+
+					<h3><a id="options" name="options"></a>Options Tab</h3>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_tab_options.jpg" /></p>
+
+					<p><strong>Channel:</strong> Allows you to select which channel to publish to. There&#39;s almost never any instance this feature is used.</p>
+
+					<p><strong>Status:</strong>&nbsp;An &ldquo;Open&rdquo; entry means that it will display. A &ldquo;Closed&rdquo; entry means it will not display. This is useful when putting up&nbsp;temporary content. You can also set a date for it to expire under the Date tab.</p>
+
+					<p><strong>Author:</strong> Let&#39;s you choose who is designated as the Author of the Entry. This is mostly used with our Blog channel to determine who to give the by-line to, that way you can publish an entry for someone else and choose them as the author.</p>
+
+					<p><strong>Make Sticky Entry:</strong> If you check this box, this Entry will remain at the top of entries pulled regardless of when it was published.</p>
+
+					<h3><a id="seo" name="seo"></a>SEO Meta Data Tab</h3>
+
+					<p style="text-align:center"><br />
+					<img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_tab_seo.jpg" /></p>
+
+					<p>This tab provides you with fields for entering SEO title and description. Search Engines use this information to classify each page on your website for searching purposes. If left blank, we will generate a default set of keywords and descriptions when the page loads, but it&#39;s generally preferable to enter your own.</p>
+					
+					<p>Additionally fields may be available here, such as Robots, which controls how Search Engines access and treat the page, and Ping Search Engines, which when checked will notify Search Engines to re-crawl and index the page. Additional fields may be added, and are generally used by OMG to manage SEO. Descriptions are provided with each field.</p>
+
+					<h3><a id="revisions" name="revisions"></a>Revisions Tab</h3>
+
+					<p style="text-align:center"><br />
+					<img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_tab_revisions.jpg" /></p>
+
+					<p>If you would like to roll back to&nbsp;a previous version&nbsp;of an entry, simply click on the Revisions tab and select Load Revision for the date&nbsp;you&rsquo;d like to go back to. The old revision isn&#39;t saved until you click Save Revision or Submit again, to allow you to view what is in the older revision before committing to it. Generally, we save the last 50 Revisions for each channel entry.</p>
+
+					<h2><a id="profile" name="profile"></a>My Profile</h2>
+
+					<p>By clicking your <strong>Screen Name</strong> in the top-right corner of the Control Panel and then clicking <strong>My Profile </strong>in the list that appears, you will be taken your profile editing section.</p>
+
+					<p style="text-align:center"><img alt="" src="https://v4wu8f00-a.akamaihd.net/omg/welcome-page/ee4/ee_profile.jpg" /></p>
+
+					<p>The most useful tool in this section is <strong>Username &amp; Password</strong>. This will allow you to change the username that you log in, your Screen Name or your Password.</p>
+
+					<p>There are quite a few other options here, but most aren&#39;t really used on most sites.</p>
+
+				</div>
+				<!-- /.section-body -->
+				
+				<div style="height: 50px;"></div>
+				<a id="support"></a>
+				<div class="section-head">
+					<h3>Support</h3>
+				</div>
+				<!-- /.section-head -->
+
+				<div class="contacts-body">
+					<p>
+						Obviously, we can't cover all questions and solve all problems with just this page. If you have any questions or require support for your site, you can always click below to submit a support ticket to Omaha Media Group and a representative will respond to you shortly. Alternatively, you can always email us at <a href="mailto:support@omahamediagroup.com">support@omahamediagroup.com</a>.
+					</p>
+					<div class="form-contacts">
+						<a href="https://www.omahamediagroup.com/support" class="btn btn-blue btn-blue-alt" target="_blank" style="width: 100%">OMG Support</a>
+					</div>
+					<!-- /.form-contacts -->
+				</div>
+				<!-- /.section-body -->
+				{if:else}
+				<div class="section-head">
+					<h3>Please login to view this page</h3>
+				</div>
+				<!-- /.section-head -->
+				
+				<div class="contacts-body">
+				  {exp:member:login_form return="welcome" id="omg_contact_form"}
+				  <div class="form-row">
+					<div class="form-controls">
+						<input type="text" name="username" value="" maxlength="32" class="field" placeholder="Username" required />
+				  	</div>
+				  </div>
+				  <div class="form-row">
+					<div class="form-controls">
+						<input type="password" name="password" value="" maxlength="32" class="field" placeholder="Password" required />
+				  	</div>
+				  </div>
+
+				  <input type="hidden" name="anon" value="0">
+				  <div class="form-actions">
+					<input type="submit" value="Submit" class="btn btn-blue btn-blue-alt" style="width: 100%" name="submit" id="submit" />
+				  </div>
+				  <!-- /.form-actions -->
+				  
+				  <p><a href="/omgcp/index.php?/cp/login/forgotten_password_form">Forgot your password?</a></p>
+				  {/exp:member:login_form}
+				  
+				</div>
+				<!-- /.form-contacts -->
+				{/if}
+				
+			</section>
+			<!-- /.section-aboutus -->
+		</div>
+		<!-- /.main -->
+
+		<footer class="footer">
+
+			<p class="copyright">&copy; Copyright {current_time format="%Y"} - All Rights Reserved. Powered by <a href="https://www.omahamediagroup.com" target="_blank">Omaha Media Group LLC</a></p>
+			<!-- /.copyright -->
+		</footer>
+		<!-- /.footer -->
+	</div>
+	<!-- /.wrapper-content -->
+</div>
+<!-- /.wrapper -->
+
+</body>
+</html>

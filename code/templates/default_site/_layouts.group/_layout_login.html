@@ -1,0 +1,56 @@
+{layout="_layouts/_wrapper"}
+
+{!-- Pass-Through Variables --}
+{if layout:page_schema}{layout:set name="page_schema"}{layout:page_schema}{/layout:set}{/if}
+{if layout:entry_id}{layout:set name="entry_id"}{layout:entry_id}{/layout:set}{/if}
+{if layout:meta_robots}{layout:set name="meta_robots"}{layout:meta_robots}{/layout:set}{/if}
+{if layout:meta_page_title}{layout:set name="meta_page_title"}{layout:meta_page_title}{/layout:set}{/if}
+{if layout:meta_section}{layout:set name="meta_section"}{layout:meta_section}{/layout:set}{/if}
+{if layout:meta_summary_field}{layout:set name="meta_summary_field"}{layout:meta_summary_field}{/layout:set}{/if}
+{if layout:meta_canon_segments}{layout:set name="meta_canon_segments"}{layout:meta_canon_segments}{/layout:set}{/if}
+{if layout:meta_image}{layout:set name="meta_image"}{layout:meta_image}{/layout:set}{/if}
+{if layout:meta_title}{layout:set name="meta_title"}{layout:meta_title}{/layout:set}{/if}
+{if layout:meta_description}{layout:set name="meta_description"}{layout:meta_description}{/layout:set}{/if}
+{if layout:meta_keywords}{layout:set name="meta_keywords"}{layout:meta_keywords}{/layout:set}{/if}
+{if layout:meta_summary}{layout:set name="meta_summary"}{layout:meta_summary}{/layout:set}{/if}
+{if layout:meta_canon}{layout:set name="meta_canon"}{layout:meta_canon}{/layout:set}{/if}
+{if layout:extra_css}{layout:set name="extra_css"}{layout:extra_css}{/layout:set}{/if}
+{if layout:extra_js_header}{layout:set name="extra_js_header"}{layout:extra_js_header}{/layout:set}{/if}
+{if layout:extra_js_footer}{layout:set name="extra_js_footer"}{layout:extra_js_footer}{/layout:set}{/if}
+{layout:set name="header_hide"}yes{/layout:set}
+{layout:set name="sidebar_hide"}yes{/layout:set}
+{layout:set name="app_class"}app-without-header app-login-screen{/layout:set}
+
+{!-- Layout --}
+		<!-- BEGIN register -->
+		<div class="register">
+			<!-- BEGIN register-cover -->
+			<div class="register-cover"{if layout:background} style="background: url({layout:background}); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;"{/if}></div>
+			<!-- END register-cover -->
+			<!-- BEGIN register-content -->
+			<div class="register-content">
+				<!-- BEGIN register-brand -->
+				<div class="register-brand mt-3">
+					<a href="/"><b>{exp:ilum_wallet:lang key="onme"}</b>{exp:ilum_wallet:lang key="wallet"}</a>
+				</div>
+				<!-- END register-brand -->
+				{if layout:title}
+				{exp:seo_meta_data:meta_tags meta_only="yes" entry_id="{layout:entry_id}"}
+				{if no_results}
+				<h3 class="m-b-20"><span>{layout:title}</span></h3>
+				{if layout:sub_title}
+				<p class="m-b-20">{layout:sub_title}</p>
+				{/if}
+				{/if}
+				<h3 class="m-b-20"><span>{if meta_h1}{meta_h1}{if:else}{layout:title}{/if}</span></h3>
+				{if layout:sub_title || meta_h2}
+				<p class="m-b-20">{if meta_h2}{meta_h2}{if:else}{layout:sub_title}{/if}</p>
+				{/if}
+				{/exp:seo_meta_data:meta_tags}
+				{/if}
+				
+				{layout:contents}
+			</div>
+			<!-- END register-content -->
+		</div>
+		<!-- END register -->

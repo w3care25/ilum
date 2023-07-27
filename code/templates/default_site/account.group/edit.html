@@ -1,0 +1,112 @@
+{layout="_layouts/_layout_main"}
+
+{!-- Meta Variables --}
+{layout:set name="page_schema"}ProfilePage{/layout:set}
+{layout:set name="meta_robots"}noindex,nofollow{/layout:set}
+{layout:set name="meta_page_title"}{exp:ilum_wallet:lang key="edit_profile"} - {logged_in_screen_name}{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="edit_profile"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="my_profile"}{/layout:set:append}
+{layout:set:append name="breadcrumbs_url"}/{segment_1}{/layout:set:append}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="edit_profile"}{/layout:set:append}
+
+{!-- Contents --}
+<div class="mt-3">
+  {exp:user:edit override_return="{segment_1}/updated" form:class="validator" required="first_name|last_name|phone|address|city|state|zip" password_required="no" screen_name_password_required="no"}
+  <div class="card text-left">
+  	{!--<div class="card-header card-header-inverse bg-orange">
+		<h4 class="card-header-title text-uppercase">{exp:ilum_wallet:lang key="edit_profile"}</h4>
+	</div>--}
+	<div class="panel-body p-sm">
+	  <fieldset>
+		<div class="control-group">
+		  <div class="row">
+
+			<div class="form-group col-md-6">
+			  <label for="first_name">{exp:ilum_wallet:lang key="first_name"} {required_v}</label>
+			  <input type="text" class="form-control" id="first_name" name="first_name" value="{first_name}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+
+			<div class="form-group col-md-6">
+			  <label for="last_name">{exp:ilum_wallet:lang key="last_name"} {required_v}</label>
+			  <input type="text" class="form-control" id="last_name" name="last_name" value="{last_name}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+		  </div>
+
+		  <div class="row">
+			<div class="form-group col-md-6">
+			  <label for="company">{exp:ilum_wallet:lang key="company"}</label>
+			  <input type="text" class="form-control" id="company" name="company" value="{company}" />
+			  <span class="help-block with-errors"></span>
+			</div>
+
+			<div class="form-group col-md-6">
+			  <label for="phone">{exp:ilum_wallet:lang key="phone"} {required_v}</label>
+			  <input type="tel" class="form-control" id="phone" name="phone" class="phone" value="{phone}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+		  </div>
+		</div>
+	  </fieldset>
+
+	  <fieldset>
+		<div class="control-group">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="form-group">
+				<label for="address">{exp:ilum_wallet:lang key="address"} {required_v}</label>
+				<input type="text" class="form-control" id="address" name="address" value="{address}" required />
+				<span class="help-block with-errors"></span>
+			  </div>
+
+			  <div class="form-group">
+				<input type="text" class="form-control" id="address_2" name="address_2" value="{address_2}" />
+				<span class="help-block with-errors"></span>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="row">
+			<div class="form-group col-md-3">
+			  <label for="city">{exp:ilum_wallet:lang key="city"} {required_v}</label>
+			  <input type="text" class="form-control" id="city" name="city" value="{city}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+
+			<div class="form-group col-md-3">
+			  <label for="state">{exp:ilum_wallet:lang key="state_region"} {required_v}</label>
+			  <input type="text" class="form-control" id="state" name="state" title="{exp:ilum_wallet:lang key="state_abbr"}" data-toggle="tooltip" maxlength="2" value="{state}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+
+			<div class="form-group col-md-3">
+			  <label for="zip">{exp:ilum_wallet:lang key="zip_postal_code"} {required_v}</label>
+			  <input type="text" class="form-control" id="zip" name="zip" value="{zip}" required />
+			  <span class="help-block with-errors"></span>
+			</div>
+
+			<div class="form-group col-md-3">
+			  <label for="country">{exp:ilum_wallet:lang key="country"} {required_v}</label>
+			  <select class="form-control" name="country" id="country" required>
+				{embed="{segment_1}/_country_options" country="{country}"}
+			  </select>
+			  <span class="help-block with-errors"></span>
+			</div>
+		  </div>
+		</div>
+	  </fieldset>
+	</div>
+	<div class="card-footer row ml-no mr-no">
+	  <div class="col-md-12 text-right p-no">
+		  <button type="submit" class="btn btn-success rippler rippler-default">{exp:ilum_wallet:lang key="save_settings"}</button>
+	  </div>
+	</div>
+  </div>
+  <!-- /.card -->
+  {/exp:user:edit}
+</div>

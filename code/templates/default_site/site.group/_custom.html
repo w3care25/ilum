@@ -1,0 +1,22 @@
+{layout="_layouts/_layout_main"}
+
+{exp:channel:entries channel="custom_pages" limit="1" dynamic="no" entry_id="{embed:entry_id}" require_entry="yes" disable="categories|category_fields|member_data|pagination"}
+{if no_results}{redirect="404"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="entry_id"}{entry_id}{/layout:set}
+{layout:set name="meta_title"}{title} - {site_name}{/layout:set}
+{layout:set name="meta_summary_field"}summary{/layout:set}
+{layout:set name="meta_canon_segments"}1{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{title}{/layout:set}
+{layout:set name="sub_title"}{sub_title}{/layout:set}
+{layout:set:append name="breadcrumbs"}{title}{/layout:set:append}
+
+{!-- Content --}
+{embed="_layouts/_content" entry_id="{entry_id}"}
+
+{/exp:channel:entries}

@@ -1,0 +1,72 @@
+{layout="_layouts/_layout_main"}
+
+{if !segment_2}
+{exp:channel:entries channel="pages" limit="1" url_title="{segment_1}" dynamic="no" disable="categories|category_fields|member_data|pagination"}
+{if no_results}{redirect="404"}{/if}
+{!-- Meta Variables --}
+{layout:set name="entry_id"}{entry_id}{/layout:set}
+{layout:set name="page_schema"}CollectionPage{/layout:set}
+{layout:set name="meta_title"}{legal_name} - {site_name}{/layout:set}
+{layout:set name="meta_summary_field"}summary{/layout:set}
+{layout:set name="meta_robots"}noindex,follow{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{title}{/layout:set}
+{layout:set name="sub_title"}{sub_title}{/layout:set}
+{layout:set:append name="breadcrumbs"}{legal_name}{/layout:set:append}
+
+{!-- Contents --}
+{/exp:channel:entries}
+<section class="section section--main">
+			<div class="container-fluid">
+				<div class="section-body">
+					<ul class="list-group">
+						{exp:channel:entries channel="legal" orderby="date" sort="desc" dynamic="no" disable="custom_fields|categories|category_fields|member_data|pagination"}
+						<li class="list-group-item">
+							<a href="{legal_url}/{url_title}">
+								<h5 class="list-title">{title}</h5>
+								{if sub_title}<h6>{sub_title}</h6>{/if}
+							</a>
+						</li>
+						{/exp:channel:entries}
+					</ul><!-- /.list-advanced -->
+				</div><!-- /.section-body -->
+			</div><!-- /.container -->
+		</section><!-- /.section -->
+			
+{if:else}
+{exp:channel:entries channel="legal" limit="1" url_title="{segment_2}" require_entry="yes" disable="categories|category_fields|member_data|pagination"}
+{if no_results}{redirect="404"}{/if}
+
+{!-- Meta Variables --}
+{layout:set name="entry_id"}{entry_id}{/layout:set}
+{layout:set name="meta_title"}{title} - {legal_name}{/layout:set}
+{layout:set name="meta_summary_field"}summary{/layout:set}
+
+{!-- Styles & Scripts --}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{title}{/layout:set}
+{layout:set name="sub_title"}{sub_title}{/layout:set}
+{layout:set:append name="breadcrumbs"}{channel}{/layout:set:append}
+{layout:set:append name="breadcrumbs_url"}/{segment_1}{/layout:set:append}
+{layout:set:append name="breadcrumbs"}{title}{/layout:set:append}
+
+{!-- Content --}
+{if text}
+<section class="section section--main content">
+  <div class="container-fluid">
+    {text}
+  </div><!-- /.container -->
+</section><!-- /.section -->
+{/if}
+
+<div class="section section--main">
+	<div class="container-fluid">
+		{previous_v}
+	</div>
+</div>
+{/exp:channel:entries}
+{/if}

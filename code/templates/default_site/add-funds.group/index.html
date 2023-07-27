@@ -1,0 +1,283 @@
+{layout="_layouts/_layout_main"}
+
+{!-- Meta Variables --}
+{layout:set name="meta_title"}{exp:ilum_wallet:lang key="add_funds"}{/layout:set}
+
+{!-- Styles & Scripts --}
+{layout:set name="extra_js_footer"}
+
+<script>
+  //prevent toasts
+  respond_toasts = 1;
+  
+  $(document).ready(function() {
+  	$('#amount').keyup(function() {
+		var amount = $('#amount').val();
+		var conv = $('input[name=conversion]').val();
+		var percent = $('input[name=processing_percent]').val();
+		var fee = parseFloat($('input[name=processing_fee]').val());
+		var ilumbucks = parseFloat(Math.round((amount * conv) * 100) / 100).toFixed(2);
+		var processing_fee = parseFloat((amount * percent) / 100 + fee).toFixed(2); 
+		$('.ilum-amount').html(ilumbucks);
+		$('#paypal_amount, #applepay_amount').val(amount).change();
+		$('#paypal_processing_input').val(processing_fee);
+		$('#processing_fee, #paypal_processing_fee, #applepay_processing_fee').html(processing_fee);
+		var total = +amount + +processing_fee;
+		$('#total_charge, #paypal_total_charge, #applepay_total_charge').html(total.toFixed(2));
+	});
+	$('#paypal_amount').keyup(function() {
+		var amount = $('#paypal_amount').val();
+		var conv = $('input[name=conversion]').val();
+		var percent = $('input[name=processing_percent]').val();
+		var fee = parseFloat($('input[name=processing_fee]').val());
+		var ilumbucks = parseFloat(Math.round((amount * conv) * 100) / 100).toFixed(2);
+		var processing_fee = parseFloat((amount * percent) / 100 + fee).toFixed(2); 
+		$('#modalPayPal .ilum-amount').html(ilumbucks);
+		$('#paypal_processing_input').val(processing_fee);
+		$('#paypal_processing_fee').html(processing_fee);
+		var total = +amount + +processing_fee;
+		$('#paypal_total_charge').html(total.toFixed(2));
+	});
+	$('#applepay_amount').keyup(function() {
+		var amount = $('#applepay_amount').val();
+		var conv = $('input[name=conversion]').val();
+		var percent = $('input[name=processing_percent]').val();
+		var fee = parseFloat($('input[name=processing_fee]').val());
+		var ilumbucks = parseFloat(Math.round((amount * conv) * 100) / 100).toFixed(2);
+		var processing_fee = parseFloat((amount * percent) / 100 + fee).toFixed(2); 
+		$('#modalApplePay .ilum-amount').html(ilumbucks);
+		$('#applepay_processing_fee').html(processing_fee);
+		var total = +amount + +processing_fee;
+		$('#applepay_total_charge').html(total.toFixed(2));
+	});
+	{if last_segment == "error"}notifyError();{/if}
+  });
+  
+  var notifyError = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="error"}",
+		content: "{exp:ilum_wallet:lang key="add_funds_error"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-pink text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  var insufficientWarning = function() {
+	$.notification({
+		title: "{exp:ilum_wallet:lang key="warning"}",
+		content: "{exp:ilum_wallet:lang key="insufficient_funds_txn_warning"}",
+		icon: 'fas fa-times',
+		iconClass: 'bg-gradient-yellow text-white',
+		autoclose: false,
+		btn: true,
+		btnText: "{exp:ilum_wallet:lang key="support"}",
+		btnUrl: "/support"
+	});
+  };
+  
+  {if segment_2 == "insufficient"}
+  $(document).ready(function() {
+  	$('#amount').keyup();
+	insufficientWarning();
+  });
+  {/if}
+</script>
+
+<!-- BEGIN modal -->
+<div class="modal fade" id="modalPayPal">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header bg-warning text-white">
+		<h5 class="modal-title"><i class="fab fa-fw fa-paypal"></i> <span>{exp:ilum_wallet:lang key="paypal"}</h5>
+		<button type="button" class="close" data-dismiss="modal"><span><i class="fas fa-times fa-fw text-white"></i></span></button>
+	  </div>
+	  {exp:ilum_wallet:paypal_form return="{if segment_2 == 'insufficient' &&  segment_5 == 'response'}https://{wallet_env}app.ilum.app/gift/response/{segment_6}/{segment_3}/retry{if:elseif segment_2 == 'insufficient'}https://{wallet_env}app.ilum.app/gift/retry/{segment_3}{if:else}https://{wallet_env}wallet.ilum.app/add_success{/if}" pdt_return="https://{wallet_env}wallet.ilum.app/add-funds/paypal-return" class="validator"}
+	  
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="form-group col-12">
+			<label class="control-label">{exp:ilum_wallet:lang key="amount"} {required_v} ({exp:ilum_wallet:lang key="will_add"} <span class="label label-black ilum-amount">0.00</span> {exp:ilum_wallet:lang key="ilum_bucks"})</label>
+			<div class="input-group">
+			  <div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-fw fa-dollar-sign fa-2x"></i></span>
+			  </div>
+			  <input type="tel" min="1.00" max="999999.99" step="0.01" class="form-control form-control-lg money" placeholder="0.00" name="amount_1" id="paypal_amount" required autocomplete="off" {if segment_2 == "insufficient"}value="{if segment_4 < 1.00}1.00{if:else}{segment_4}{/if}"{/if} />							
+			</div>
+			<span class="help-block with-errors"><span class="text-muted">{exp:ilum_wallet:lang key="add_funds_minimum"}</span></span>
+		  </div>
+		</div>
+		
+		<div class="row mb-3">
+		  <div class="col-6">
+			<b>{exp:ilum_wallet:lang key="processing_fee"}</b>
+		  </div>
+		  <div class="col-6 text-right">
+		  	<input type="hidden" name="amount_2" id="paypal_processing_input" value="0.00" />
+			$<span id="paypal_processing_fee">0.00</span>
+		  </div>
+		</div>
+		
+		<div class="row mb-3">
+		  <div class="col-6">
+			<b>{exp:ilum_wallet:lang key="total_charge"}</b>
+		  </div>
+		  <div class="col-6 text-right">
+			$<span id="paypal_total_charge">0.00</span>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer d-block text-right">
+		<button type="button" class="btn btn-default btn-lg rippler rippler-inverse" data-dismiss="modal">{exp:ilum_wallet:lang key="close"}</button>
+		<button type="submit" class="btn btn-warning btn-lg rippler rippler-default no-loading"><i class="fab fa-fw fa-paypal"></i> {exp:ilum_wallet:lang key="add_funds"}</button>
+	  </div>
+	  {/exp:ilum_wallet:paypal_form}
+	</div>
+  </div>
+</div>
+<!-- END modal -->
+
+<div class="modal fade" id="modalApplePay">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header bg-dark text-white">
+		<h5 class="modal-title"><i class="fab fa-fw fa-lg fa-apple-pay"></i> <span>{exp:ilum_wallet:lang key="apple_pay"}</h5>
+		<button type="button" class="close" data-dismiss="modal"><span><i class="fas fa-times fa-fw text-white"></i></span></button>
+	  </div>
+	  {exp:ilum_wallet:applepay_form return="/add-funds/applepay" final_return="{if segment_2 == 'insufficient' &&  segment_5 == 'response'}https://{wallet_env}app.ilum.app/gift/response/{segment_6}/{segment_3}/retry{if:elseif segment_2 == 'insufficient'}https://{wallet_env}app.ilum.app/gift/retry/{segment_3}{if:else}https://{wallet_env}wallet.ilum.app/add_success{/if}" cancel_return="{current_url}" class="validator"}
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="form-group col-12">
+			<label class="control-label">{exp:ilum_wallet:lang key="amount"} {required_v} ({exp:ilum_wallet:lang key="will_add"} <span class="label label-black ilum-amount">0.00</span> {exp:ilum_wallet:lang key="ilum_bucks"})</label>
+			<div class="input-group">
+			  <div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-fw fa-dollar-sign fa-2x"></i></span>
+			  </div>
+			  <input type="tel" min="1.00" max="999999.99" step="0.01" class="form-control form-control-lg money" placeholder="0.00" name="amount" id="applepay_amount" required autocomplete="off" {if segment_2 == "insufficient"}value="{if segment_4 < 1.00}1.00{if:else}{segment_4}{/if}"{/if} />							
+			</div>
+			<span class="help-block with-errors"><span class="text-muted">{exp:ilum_wallet:lang key="add_funds_minimum"}</span></span>
+		  </div>
+		</div>
+		
+		<div class="row mb-3">
+		  <div class="col-6">
+			<b>{exp:ilum_wallet:lang key="processing_fee"}</b>
+		  </div>
+		  <div class="col-6 text-right">
+			$<span id="applepay_processing_fee">0.00</span>
+		  </div>
+		</div>
+		
+		<div class="row mb-3">
+		  <div class="col-6">
+			<b>{exp:ilum_wallet:lang key="total_charge"}</b>
+		  </div>
+		  <div class="col-6 text-right">
+			$<span id="applepay_total_charge">0.00</span>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer d-block text-right">
+		<button type="button" class="btn btn-default btn-lg rippler rippler-inverse" data-dismiss="modal">{exp:ilum_wallet:lang key="close"}</button>
+		<button type="submit" class="btn btn-dark btn-lg rippler rippler-default no-loading" id="applepay-payment-request-button"><i class="fab fa-fw fa-lg fa-apple-pay"></i> {exp:ilum_wallet:lang key="add_funds_with_applepay"}</button>
+	  </div>
+	  {/exp:ilum_wallet:applepay_form}
+	</div>
+  </div>
+</div>
+<!-- END modal -->
+{/layout:set}
+
+{!-- Layout Variables --}
+{layout:set name="title"}{exp:ilum_wallet:lang key="add_funds"}{/layout:set}
+{layout:set:append name="breadcrumbs"}{exp:ilum_wallet:lang key="add_funds"}{/layout:set:append}
+
+{!-- Content --}
+			<div class="row">
+			  <div class="col-12 mb-2">				
+
+				{!--{exp:ilum_wallet:paypal_form return="{if segment_2 == 'insufficient' &&  segment_5 == 'response'}https://{wallet_env}app.ilum.app/gift/response/{segment_6}/{segment_3}/retry{if:elseif segment_2 == 'insufficient'}https://{wallet_env}app.ilum.app/gift/retry/{segment_3}{if:else}https://{wallet_env}wallet.ilum.app/add_success{/if}" class="validator"}
+				<input type="hidden" name="amount_1" id="paypal_amount" value="{if segment_2 == "insufficient"}{if segment_4 < 1.00}1.00{if:else}{segment_4}{/if}{/if}" />
+				<button type="submit" class="rippler rippler-default btn btn-warning float-left mr-2 rippler-inverse" data-toggle="modal" data-target="#modalPayPal"><i class="fab fa-fw fa-paypal"></i> <span>{exp:ilum_wallet:lang key="paypal"}</span></button>
+				{/exp:ilum_wallet:paypal_form}--}
+				<button type="button" class="rippler rippler-default btn btn-warning float-left mr-2 rippler-inverse" data-toggle="modal" data-target="#modalPayPal"><i class="fab fa-fw fa-paypal"></i> <span>{exp:ilum_wallet:lang key="paypal"}</span></button>
+
+				<div class="apple-pay-button">
+				  <button type="button" class="rippler rippler-default btn btn-dark float-left mr-2 rippler-inverse" data-toggle="modal" data-target="#modalApplePay"><i class="fab fa-fw fa-lg fa-apple-pay"></i> <span>{exp:ilum_wallet:lang key="apple_pay"}</span></button>
+				</div>
+			  </div>
+  			</div>
+					
+			<div class="row">
+			  <div class="col-12">
+				<!-- BEGIN card -->
+				<div class="card w-100">
+				  <div class="card-body">					
+				    {exp:ilum_wallet:add_funds_form class="validator" return="{if segment_2 == 'insufficient' &&  segment_5 == 'response'}https://{wallet_env}app.ilum.app/gift/response/{segment_6}/{segment_3}/retry{if:elseif segment_2 == 'insufficient'}https://{wallet_env}app.ilum.app/gift/retry/{segment_3}{if:else}/add_success{/if}" error_return="/add-funds/error"}
+					<div class="row">
+					  <div class="form-group col-12">
+						<label class="control-label">{exp:ilum_wallet:lang key="payment_method"} {required_v}</label>
+						<div class="input-group">
+							<select name="payment_method" id="payment_method" class="form-control" required>
+							  {embed="add-funds/_payment_methods"}
+							</select>
+							<div class="input-group-append">
+								<a href="/payment-methods" class="btn btn-outline-secondary rippler rippler-default text-center" type="button" tabindex="25" data-toggle="{exp:ilum_wallet:lang key="manage_payment_methods"}"><i class="fas fa-credit-card fa-fw"></i></a>
+							</div>
+						</div>
+						<span class="help-block with-errors"></span>
+					  </div>
+					</div>
+					
+					<div class="row">
+					  <div class="form-group col-12">
+						<label class="control-label">{exp:ilum_wallet:lang key="amount"} {required_v} ({exp:ilum_wallet:lang key="will_add"} <span class="label label-black ilum-amount">0.00</span> {exp:ilum_wallet:lang key="ilum_bucks"})</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-fw fa-dollar-sign fa-2x"></i></span>
+							</div>
+							<input type="tel" {!--pattern="\d+\.\d{2}" --}min="1.00" max="999999.99" step="0.01" class="form-control form-control-lg money" placeholder="0.00" name="amount" id="amount" required autocomplete="off" {if segment_2 == "insufficient"}value="{if segment_4 < 1.00}1.00{if:else}{segment_4}{/if}"{/if} />							
+						</div>
+						<span class="help-block with-errors"><span class="text-muted">{exp:ilum_wallet:lang key="add_funds_minimum"}</span></span>
+					  </div>
+					</div>
+					
+					<div class="row mb-3">
+						<div class="col-6">
+							<b>{exp:ilum_wallet:lang key="processing_fee"}</b>
+						</div>
+						<div class="col-6 text-right">
+							$<span id="processing_fee">0.00</span>
+						</div>
+					</div>
+					
+					<div class="row mb-3">
+						<div class="col-6">
+							<b>{exp:ilum_wallet:lang key="total_charge"}</b>
+						</div>
+						<div class="col-6 text-right">
+							$<span id="total_charge">0.00</span>
+						</div>
+					</div>
+					
+					<div class="row">
+					  <div class="col-12">
+					  	<button type="submit" class="btn btn-lg btn-success mb-2 btn-block rippler rippler-default">{exp:ilum_wallet:lang key="add_funds"}</button>
+					  </div>
+					</div>
+					{/exp:ilum_wallet:add_funds_form}
+					
+					<div class="card-loader hidden">
+					  <div class="d-flex justify-content-center">
+						<div class="spinner-border text-primary"></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<!-- END card -->
+			  </div>
+			</div>
+			<!-- END row -->

@@ -1,0 +1,135 @@
+[
+    {
+        "name": "litzinger/basee",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/litzinger/basee.git",
+            "reference": "bf036c8ffba1961b5e6a3a809ac7c0cbc16559d5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/litzinger/basee/zipball/bf036c8ffba1961b5e6a3a809ac7c0cbc16559d5",
+            "reference": "bf036c8ffba1961b5e6a3a809ac7c0cbc16559d5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2018-11-05T14:56:45+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Basee\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian Litzinger",
+                "email": "litzinger@gmail.com"
+            }
+        ],
+        "description": "Addon base for ExpressionEngine"
+    },
+    {
+        "name": "symfony/options-resolver",
+        "version": "v3.1.10",
+        "version_normalized": "3.1.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/options-resolver.git",
+            "reference": "76f01eb4b6f94a6fd2933cf01b514d669dbbccf8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/76f01eb4b6f94a6fd2933cf01b514d669dbbccf8",
+            "reference": "76f01eb4b6f94a6fd2933cf01b514d669dbbccf8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "time": "2017-01-02T20:31:54+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\OptionsResolver\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony OptionsResolver Component",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "config",
+            "configuration",
+            "options"
+        ]
+    },
+    {
+        "name": "litzinger/file-field",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/litzinger/file-field.git",
+            "reference": "664e7e446d98ecfe27e5670c5a7c8fb04764a578"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/litzinger/file-field/zipball/664e7e446d98ecfe27e5670c5a7c8fb04764a578",
+            "reference": "664e7e446d98ecfe27e5670c5a7c8fb04764a578",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9",
+            "symfony/options-resolver": "3.1.*"
+        },
+        "time": "2016-11-27T22:17:16+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Litzinger\\FileField\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian Litzinger",
+                "email": "litzinger@gmail.com"
+            }
+        ],
+        "description": "File Field library for ExpressionEngine 3"
+    }
+]
